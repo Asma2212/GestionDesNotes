@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
+import net.sf.jsqlparser.expression.operators.arithmetic.Concat;
 import tn.encar.gestnotes.models.entities.Personne;
 import tn.encar.gestnotes.repositories.PersonneRepository;
 import tn.encar.gestnotes.services.I_PersonneService;
@@ -23,7 +24,23 @@ public class PersonneService implements I_PersonneService {
 	public List<Personne> getPersonnes() {
 		return (List<Personne>) personneRepository.findAll();
 	}	
+	
+	@Override
+	public Personne getPersonneById(int id) {
+		return personneRepository.findById1(id);
+	}
 
+	@Override
+	public List<Personne> getPersonnesByRole(String role) {
+		return personneRepository.findByRole(role);
+	}
+
+	
+	@Override
+	public Personne getPersonneByTel(int tel) {
+		return personneRepository.findByTel(tel);
+	}
+	
 	@Override
 	public void addNewPersonne(Personne personne) {
 		
@@ -44,10 +61,9 @@ public class PersonneService implements I_PersonneService {
 	public void updatePersonne(int id, int cin, String nom, String prenom, int tel, String email, Date dateNaiss, String mdp) {
 		
 		Personne personne = personneRepository.findById(id).orElseThrow(()->new IllegalStateException("Personne par id "+id+" n'existe pas!"));
-		
 
 		if(cin != 0 && cin != personne.getCin()) {
-			if(!personneRepository.findByCin(cin).isEmpty())
+			if(personneRepository.findByCin(cin) != null)
 				throw new IllegalStateException("cin existe deja!");
 		}
 		
@@ -75,6 +91,33 @@ public class PersonneService implements I_PersonneService {
 	
 		personneRepository.save(personne);
 		
+	}
+
+
+	@Override
+	public void updateEmailById(String email, int employeId) {
+		Personne personne = personneRepository.findById1(employeId);
+		if(!personneRepository.findByEmail(email).isEmpty() && !Objects.equals(email, personne.getEmail()))
+			personne.setEmail(email);
+		
+		personneRepository.save(personne);
+	}
+
+	@Override
+	public void updatePasswordById(String mpd, int id) {
+		Personne personne = personneRepository.findById1(id);
+		if(!Objects.equals(mpd, personne.getMotDePasse()))
+			personne.setMotDePasse(mpd);
+		personneRepository.save(personne);
+	}
+	
+	@Override
+	public String getPersonnePrenomEtNomById(int employeId) {
+	    Personne personne = personneRepository.findById1(employeId);
+	    if (personne != null) 
+	        return personne.getPrenom() + " " + personne.getNom();
+	    else 
+	        return null;
 	}
 	
 
