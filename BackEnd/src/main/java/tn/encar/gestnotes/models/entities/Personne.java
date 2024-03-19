@@ -2,6 +2,7 @@ package tn.encar.gestnotes.models.entities;
 
 import java.sql.Date;
 
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +23,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "ROLE")
 public abstract class Personne {
 
 	@Id
