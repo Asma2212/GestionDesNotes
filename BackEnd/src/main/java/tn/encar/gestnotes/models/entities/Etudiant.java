@@ -1,4 +1,4 @@
-package tn.encar.gestnotes.entities;
+package tn.encar.gestnotes.models.entities;
 
 
 import jakarta.persistence.Entity;
@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import tn.encar.gestnotes.models.enums.TypeFormation;
 
 @Setter
 @Getter

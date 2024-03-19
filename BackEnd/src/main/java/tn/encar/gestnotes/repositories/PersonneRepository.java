@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import tn.encar.gestnotes.entities.Personne;
+import tn.encar.gestnotes.models.entities.Personne;
 
 @Repository
 public interface PersonneRepository extends CrudRepository<Personne, Integer>{

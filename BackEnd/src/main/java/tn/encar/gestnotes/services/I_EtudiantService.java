@@ -3,10 +3,9 @@ package tn.encar.gestnotes.services;
 import java.sql.Date;
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
 
-import tn.encar.gestnotes.entities.Etudiant;
-import tn.encar.gestnotes.entities.TypeFormation;
+import tn.encar.gestnotes.models.entities.Etudiant;
+import tn.encar.gestnotes.models.enums.TypeFormation;
 
 public interface I_EtudiantService {
 	

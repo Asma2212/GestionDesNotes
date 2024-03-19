@@ -1,4 +1,4 @@
-package tn.encar.gestnotes.services;
+package tn.encar.gestnotes.services.impl;
 
 import java.sql.Date;
 import java.util.List;
@@ -6,9 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tn.encar.gestnotes.entities.Etudiant;
-import tn.encar.gestnotes.entities.TypeFormation;
+import tn.encar.gestnotes.models.entities.Etudiant;
+import tn.encar.gestnotes.models.enums.TypeFormation;
 import tn.encar.gestnotes.repositories.EtudiantRepository;
+import tn.encar.gestnotes.services.I_EtudiantService;
 
 @Service
 public class EtudiantService implements I_EtudiantService{

@@ -3,7 +3,7 @@ package tn.encar.gestnotes.services;
 import java.sql.Date;
 import java.util.List;
 
-import tn.encar.gestnotes.entities.Personne;
+import tn.encar.gestnotes.models.entities.Personne;
 
 public interface I_PersonneService {
 

@@ -1,4 +1,4 @@
-package tn.encar.gestnotes.entities;
+package tn.encar.gestnotes.models.entities;
 
 import java.sql.Date;
 

@@ -8,8 +8,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import tn.encar.gestnotes.entities.Etudiant;
-import tn.encar.gestnotes.entities.TypeFormation;
+import tn.encar.gestnotes.models.entities.Etudiant;
+import tn.encar.gestnotes.models.enums.TypeFormation;
 
 @Repository
 public interface EtudiantRepository extends CrudRepository<Etudiant, Integer>{

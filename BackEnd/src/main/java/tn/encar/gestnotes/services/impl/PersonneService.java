@@ -1,4 +1,4 @@
-package tn.encar.gestnotes.services;
+package tn.encar.gestnotes.services.impl;
 
 import java.sql.Date;
 import java.util.List;
@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import tn.encar.gestnotes.entities.Personne;
+import tn.encar.gestnotes.models.entities.Personne;
 import tn.encar.gestnotes.repositories.PersonneRepository;
+import tn.encar.gestnotes.services.I_PersonneService;
 
 @Service
 @AllArgsConstructor
