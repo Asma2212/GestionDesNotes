@@ -1,6 +1,7 @@
 package tn.encar.gestnotes.models.entities;
 
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import tn.encar.gestnotes.models.enums.TypeFormation;
 @NoArgsConstructor
 @ToString
 @Entity
+@DiscriminatorValue("ETUDIANT")
 public class Etudiant extends Personne{
 
 	private int numInscri;

@@ -16,8 +16,9 @@ public interface I_EtudiantService {
 	public List<Etudiant> getEtudiantsByNiveau(int niveau);
 	public void deleteEtudiantByNumInscri(int numInscri);
 	public int countEtudiantsByNiveau(int niveau);
-	public List<Etudiant> findByNiveauAndTypeFormation(String niveau, TypeFormation formation);
+	//public List<Etudiant> findByNiveauAndTypeFormation(String niveau, TypeFormation formation);
 	public List<Etudiant> findByTypeFormation(TypeFormation formation);
 	public List<Etudiant> findByAgeGreaterThan(Date dateNaiss);
 	public int countAllEtudiants();
+	Boolean existsByEmail(String email);
 }

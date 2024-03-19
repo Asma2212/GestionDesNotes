@@ -55,10 +55,10 @@ public class EtudiantService implements I_EtudiantService{
     public int countEtudiantsByNiveau(int niveau) {
         return etudiantRepository.countByNiveau(niveau);
     }
-    @Override
+  /*  @Override
     public List<Etudiant> findByNiveauAndTypeFormation(String niveau, TypeFormation formation) {
-        return etudiantRepository.findByNiveauAndTypeFormation(niveau, formation);
-    }
+        return etudiantRepository.findByNiveauAndTypeFormation(niveau, formation.toString());
+    }*/
     
     @Override
     public List<Etudiant> findByTypeFormation(TypeFormation formation) {
@@ -68,11 +68,15 @@ public class EtudiantService implements I_EtudiantService{
     
     @Override
     public int countAllEtudiants() {
-        return etudiantRepository.countAllEtudiants();
+        return 1;
     }
 
 	@Override
     public List<Etudiant> findByAgeGreaterThan(Date dateNaiss) {
-        return etudiantRepository.findByAgeGreaterThan(dateNaiss);
+        return etudiantRepository.findByDateNaissGreaterThan(dateNaiss);
     }
+	@Override
+	public Boolean existsByEmail(String email) {
+		return etudiantRepository.existsByEmail(email);
+	}
 }

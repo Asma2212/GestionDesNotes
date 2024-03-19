@@ -13,14 +13,17 @@ import tn.encar.gestnotes.models.enums.TypeFormation;
 
 @Repository
 public interface EtudiantRepository extends CrudRepository<Etudiant, Integer>{
-
+	
+	
+	Boolean existsByEmail(String email);
+	
     Etudiant findByNumInscri(int numInscri);
 
     List<Etudiant> findByNiveau(int niveau);
     
     List<Etudiant> findByTypeFormation(TypeFormation formation);
 
-    List<Etudiant> findByNiveauAndTypeFormation(String niveau, TypeFormation formation);
+  //  List<Etudiant> findByNiveauAndTypeFormation(String niveau, String formation);
 
     void deleteByNumInscri(int numInscri);
 
@@ -30,10 +33,10 @@ public interface EtudiantRepository extends CrudRepository<Etudiant, Integer>{
     
     void deleteById(int id);
     
-    @Query("SELECT COUNT(e) FROM Etudiant e")
-    int countAllEtudiants();
+   /* @Query("SELECT COUNT(e) FROM Etudiant e")
+    int countAllEtudiants()*/
     
-    @Query("SELECT e FROM Etudiant e WHERE e.dateNaiss > :dateNaiss")
-    List<Etudiant> findByAgeGreaterThan(@Param("dateNaiss") Date dateNaiss);
+    @Query("SELECT e FROM Personne e WHERE e.dateNaiss > :dateNaiss and ROLE = 'ETUDIANT'")
+    List<Etudiant> findByDateNaissGreaterThan(@Param("dateNaiss") Date dateNaiss);
     
 }
