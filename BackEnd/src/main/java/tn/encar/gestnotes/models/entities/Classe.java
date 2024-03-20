@@ -1,35 +1,38 @@
 package tn.encar.gestnotes.models.entities;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Departement {
-
+public class Classe {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_departement") 
 	private int id;
-	private String nom;
+	private int niveau;
+	private char groupe;
+
+	@JsonIgnore
+	@ManyToMany(mappedBy = "classesAffectees")
+	private Set<Enseignant> enseignants= new HashSet<>();
 	
-	@OneToMany
-	@JoinColumn(name = "fk_depart_id", referencedColumnName = "id_departement")
-	private List<Classe> classes;
+	
 }

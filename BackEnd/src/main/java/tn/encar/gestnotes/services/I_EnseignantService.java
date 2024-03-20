@@ -16,5 +16,6 @@ public interface I_EnseignantService {
 	public void updatePositionById(int id, Statut position);
 	public void deleteEnseignantById(int id);
 	public int countClassOfEnseignantById(int id);
+	public Enseignant assignClasseToEnseignant(int enseignantId, int classeId);
 		
 }

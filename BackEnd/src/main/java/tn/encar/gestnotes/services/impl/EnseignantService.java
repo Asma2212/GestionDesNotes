@@ -1,12 +1,17 @@
 package tn.encar.gestnotes.services.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.encar.gestnotes.models.entities.Classe;
 import tn.encar.gestnotes.models.entities.Enseignant;
 import tn.encar.gestnotes.models.enums.Statut;
+import tn.encar.gestnotes.repositories.ClasseRepository;
 import tn.encar.gestnotes.repositories.EnseignantRepository;
 import tn.encar.gestnotes.services.I_EnseignantService;
 
@@ -16,6 +21,9 @@ public class EnseignantService implements I_EnseignantService{
 
 	@Autowired
 	private EnseignantRepository enseignantRepository;
+	
+	@Autowired
+	private ClasseRepository classeRepository;
 	
 	public Enseignant saveEnseignant(Enseignant enseignant) {
 		return enseignantRepository.save(enseignant);
@@ -38,14 +46,21 @@ public class EnseignantService implements I_EnseignantService{
 
 	@Override
 	public List<Enseignant> getEnseignantByClass(int idClass) {
-		// TODO Auto-generated method stub
-		return null;
+		Classe classes = classeRepository.findClassById(idClass);
+		return new ArrayList<>(classes.getEnseignants());
 	}
 
+	
 	@Override
 	public List<Enseignant> getEnseignantByLevelClass(int niveau) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Classe> classes = classeRepository.findClassesByNiveau(niveau);
+	    Set<Enseignant> enseignants = new HashSet<>(); // Using a Set to avoid duplicates
+
+	    for (Classe classe : classes) {
+	        enseignants.addAll(classe.getEnseignants());
+	    }
+
+	    return new ArrayList<>(enseignants);
 	}
 	
 	@Override
@@ -58,7 +73,7 @@ public class EnseignantService implements I_EnseignantService{
 	@Override
 	public void updatePositionById(int id, Statut position) {
 		Enseignant enseignant = enseignantRepository.findById(id)
-				.orElseThrow(()->new IllegalThreadStateException("Enseignant avec id "+id+" n'existe pas"));
+				.orElseThrow(()->new IllegalStateException("Enseignant avec id "+id+" n'existe pas"));
 		if(position != null && position == enseignant.getPosition() )
 			enseignant.setPosition(position);
 		
@@ -74,12 +89,20 @@ public class EnseignantService implements I_EnseignantService{
 
 	@Override
 	public int countClassOfEnseignantById(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		Enseignant enseignant = enseignantRepository.findById1(id);
+	    if (enseignant != null && enseignant.getClassesAffectees() != null) {
+	        return enseignant.getClassesAffectees().size();
+	    }
+	    return 0;
 	}
 
-	
-
+	@Override
+	public Enseignant assignClasseToEnseignant(int enseignantId, int classeId) {
+		Enseignant enseignant = enseignantRepository.findById1(enseignantId);
+		Classe classe = classeRepository.findById(classeId).get();
+		enseignant.getClassesAffectees().add(classe);
+		return enseignantRepository.save(enseignant);
+	}
 	
 
 }
