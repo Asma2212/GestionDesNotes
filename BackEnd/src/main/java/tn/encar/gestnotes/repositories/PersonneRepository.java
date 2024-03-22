@@ -14,7 +14,7 @@ public interface PersonneRepository extends CrudRepository<Personne, Integer>{
 
 	public Personne findByCin(int cin);
 	
-	public Personne findById1(int id);
+	public Personne findByid(int id);
 	
 	public List<Personne> findByRole(String role);
 	

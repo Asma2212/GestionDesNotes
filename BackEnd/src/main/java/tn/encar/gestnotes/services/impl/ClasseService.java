@@ -45,7 +45,7 @@ public class ClasseService implements I_ClasseService{
 
 	@Override
 	public List<Classe> getClassesByIdEnseignant(int id) {
-		Enseignant enseignant = enseignantRepository.findById1(id);
+		Enseignant enseignant = enseignantRepository.findByid(id);
 		Set<Classe> classes = enseignant.getClassesAffectees();
 		return  new ArrayList<>(classes);
 	}
@@ -54,6 +54,11 @@ public class ClasseService implements I_ClasseService{
 	public List<Classe> getClassesByIdDepartement(int id) {
 		Departement departement = departementRepository.findDepartementById(id);
 		return new ArrayList<>(departement.getClasses());
+	}
+	
+	@Override
+	public Departement getDepartementByClasseId(int classeId) {
+		return classeRepository.findDepartementById(classeId);
 	}
 
 	@Override

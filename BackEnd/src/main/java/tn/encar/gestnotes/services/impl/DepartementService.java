@@ -38,11 +38,7 @@ public class DepartementService implements I_DepartementService{
 	public List<Departement> getDepartementByNom(String nom) {
 		return departementRepository.findByNom(nom);
 	}
-	
-	@Override
-	public Departement getDepartementByClasseId(int classeId) {
-		return departementRepository.findByClassesId(classeId);
-	}
+
 
 	@Override
 	public void addNewDepartement(Departement departement) {

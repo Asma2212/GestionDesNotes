@@ -2,6 +2,7 @@ package tn.encar.gestnotes.models.entities;
 
 import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,18 +35,13 @@ public abstract class Personne {
 			allocationSize = 1)
 	@GeneratedValue(strategy= GenerationType.SEQUENCE,generator ="sequence_personne")
 	private int id;
-	
 	private int cin;
-	
 	private String nom;
-	
 	private String prenom;
-	
 	private int tel;
-	
 	private Date dateNaiss;
-	
 	private String email;
-	
 	private String motDePasse;
+	@Column(name = "ROLE", insertable = false, updatable = false)
+    private String role;
 }

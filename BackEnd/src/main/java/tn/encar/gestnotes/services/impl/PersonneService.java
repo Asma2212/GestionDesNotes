@@ -27,7 +27,7 @@ public class PersonneService implements I_PersonneService {
 	
 	@Override
 	public Personne getPersonneById(int id) {
-		return personneRepository.findById1(id);
+		return personneRepository.findByid(id);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class PersonneService implements I_PersonneService {
 
 	@Override
 	public void updateEmailById(String email, int employeId) {
-		Personne personne = personneRepository.findById1(employeId);
+		Personne personne = personneRepository.findByid(employeId);
 		if(!personneRepository.findByEmail(email).isEmpty() && !Objects.equals(email, personne.getEmail()))
 			personne.setEmail(email);
 		
@@ -105,7 +105,7 @@ public class PersonneService implements I_PersonneService {
 
 	@Override
 	public void updatePasswordById(String mpd, int id) {
-		Personne personne = personneRepository.findById1(id);
+		Personne personne = personneRepository.findByid(id);
 		if(!Objects.equals(mpd, personne.getMotDePasse()))
 			personne.setMotDePasse(mpd);
 		personneRepository.save(personne);
@@ -113,7 +113,7 @@ public class PersonneService implements I_PersonneService {
 	
 	@Override
 	public String getPersonnePrenomEtNomById(int employeId) {
-	    Personne personne = personneRepository.findById1(employeId);
+	    Personne personne = personneRepository.findByid(employeId);
 	    if (personne != null) 
 	        return personne.getPrenom() + " " + personne.getNom();
 	    else 

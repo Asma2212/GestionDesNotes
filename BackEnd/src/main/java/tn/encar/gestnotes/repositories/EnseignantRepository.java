@@ -12,7 +12,7 @@ import tn.encar.gestnotes.models.enums.Statut;
 @Repository
 public interface EnseignantRepository extends CrudRepository<Enseignant, Integer>{
 	
-	public Enseignant findById1(int id);
+	public Enseignant findByid(int id);
 	
 	public Enseignant findByPosition(Statut position);
 	

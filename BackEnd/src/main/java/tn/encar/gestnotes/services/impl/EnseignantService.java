@@ -41,7 +41,7 @@ public class EnseignantService implements I_EnseignantService{
 	
 	@Override
 	public Enseignant getEnseignantById(int id) {
-		return enseignantRepository.findById1(id);
+		return enseignantRepository.findByid(id);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class EnseignantService implements I_EnseignantService{
 
 	@Override
 	public int countClassOfEnseignantById(int id) {
-		Enseignant enseignant = enseignantRepository.findById1(id);
+		Enseignant enseignant = enseignantRepository.findByid(id);
 	    if (enseignant != null && enseignant.getClassesAffectees() != null) {
 	        return enseignant.getClassesAffectees().size();
 	    }
@@ -98,7 +98,7 @@ public class EnseignantService implements I_EnseignantService{
 
 	@Override
 	public Enseignant assignClasseToEnseignant(int enseignantId, int classeId) {
-		Enseignant enseignant = enseignantRepository.findById1(enseignantId);
+		Enseignant enseignant = enseignantRepository.findByid(enseignantId);
 		Classe classe = classeRepository.findById(classeId).get();
 		enseignant.getClassesAffectees().add(classe);
 		return enseignantRepository.save(enseignant);
@@ -106,7 +106,7 @@ public class EnseignantService implements I_EnseignantService{
 
 	@Override
 	public Enseignant removeClasseFromEnseignant(int enseignantId, int classeId) {
-		Enseignant enseignant = enseignantRepository.findById1(enseignantId);
+		Enseignant enseignant = enseignantRepository.findByid(enseignantId);
 		Classe classe = classeRepository.findById(classeId).get();
 		enseignant.getClassesAffectees().remove(classe);
 		return enseignantRepository.save(enseignant);
