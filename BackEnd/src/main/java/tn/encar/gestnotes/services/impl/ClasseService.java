@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.encar.gestnotes.models.entities.Classe;
+import tn.encar.gestnotes.models.entities.Departement;
 import tn.encar.gestnotes.models.entities.Enseignant;
 import tn.encar.gestnotes.repositories.ClasseRepository;
+import tn.encar.gestnotes.repositories.DepartementRepository;
 import tn.encar.gestnotes.repositories.EnseignantRepository;
 import tn.encar.gestnotes.services.I_ClasseService;
 
@@ -22,6 +24,9 @@ public class ClasseService implements I_ClasseService{
 	
 	@Autowired
 	private EnseignantRepository enseignantRepository;
+	
+	@Autowired
+	private DepartementRepository departementRepository;
 	
 	@Override
 	public List<Classe> getClasses() {
@@ -43,6 +48,12 @@ public class ClasseService implements I_ClasseService{
 		Enseignant enseignant = enseignantRepository.findById1(id);
 		Set<Classe> classes = enseignant.getClassesAffectees();
 		return  new ArrayList<>(classes);
+	}
+	
+	@Override
+	public List<Classe> getClassesByIdDepartement(int id) {
+		Departement departement = departementRepository.findDepartementById(id);
+		return new ArrayList<>(departement.getClasses());
 	}
 
 	@Override

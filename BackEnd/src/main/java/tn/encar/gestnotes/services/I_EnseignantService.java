@@ -17,5 +17,6 @@ public interface I_EnseignantService {
 	public void deleteEnseignantById(int id);
 	public int countClassOfEnseignantById(int id);
 	public Enseignant assignClasseToEnseignant(int enseignantId, int classeId);
+    public Enseignant removeClasseFromEnseignant(int enseignantId, int classeId);
 		
 }

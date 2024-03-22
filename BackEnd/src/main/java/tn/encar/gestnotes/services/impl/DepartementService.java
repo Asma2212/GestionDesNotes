@@ -38,6 +38,11 @@ public class DepartementService implements I_DepartementService{
 	public List<Departement> getDepartementByNom(String nom) {
 		return departementRepository.findByNom(nom);
 	}
+	
+	@Override
+	public Departement getDepartementByClasseId(int classeId) {
+		return departementRepository.findByClassesId(classeId);
+	}
 
 	@Override
 	public void addNewDepartement(Departement departement) {
@@ -85,6 +90,14 @@ public class DepartementService implements I_DepartementService{
         Classe classe = classeRepository.findClassById(classeId);
         departement.getClasses().add(classe);
         return departementRepository.save(departement);
+	}
+
+	@Override
+	public Departement removeClasseFromDepartement(int departementId, int classeId) {
+		Departement departement = departementRepository.findDepartementById(departementId);
+        Classe classe = classeRepository.findClassById(classeId);
+        departement.getClasses().remove(classe);
+		return departementRepository.save(departement);
 	}
 
 }

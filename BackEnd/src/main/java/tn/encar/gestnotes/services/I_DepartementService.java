@@ -9,10 +9,12 @@ public interface I_DepartementService {
 	public List<Departement> getDepartements();
 	public Departement getDepartementById(int id);
 	public List<Departement> getDepartementByNom(String nom);
+	public Departement getDepartementByClasseId(int classeId);
 	public void addNewDepartement(Departement departement);
 	public void updateDepartement(int id, String nom);
 	public void deleteDepartementById(int id);
 	public int countDepartement();
 	public int countClassesOfDepartementById(int id);
 	public Departement assignClasseToDepartement(int departementId, int classeId);
+	public Departement removeClasseFromDepartement(int departementId, int classeId);
 }

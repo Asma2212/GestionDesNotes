@@ -103,6 +103,14 @@ public class EnseignantService implements I_EnseignantService{
 		enseignant.getClassesAffectees().add(classe);
 		return enseignantRepository.save(enseignant);
 	}
+
+	@Override
+	public Enseignant removeClasseFromEnseignant(int enseignantId, int classeId) {
+		Enseignant enseignant = enseignantRepository.findById1(enseignantId);
+		Classe classe = classeRepository.findById(classeId).get();
+		enseignant.getClassesAffectees().remove(classe);
+		return enseignantRepository.save(enseignant);
+	}
 	
 
 }

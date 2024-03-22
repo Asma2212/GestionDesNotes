@@ -106,7 +106,13 @@ public class EnseignantController {
 	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	        }
 	    }
+	     
 	    
+	    @GetMapping("/{id}/count-classes")
+	    public ResponseEntity<Integer> countClassesOfEnseignantById(@PathVariable int id) {
+	        int count = enseignantService.countClassOfEnseignantById(id);
+	        return ResponseEntity.ok(count);
+	    }
 	    
 	    @PutMapping("/{enseignantId}/classe/{classeId}")
 	    public Enseignant assignClasseToEnseignant(
@@ -116,12 +122,21 @@ public class EnseignantController {
 	    	return enseignantService.assignClasseToEnseignant(enseignantId, classeId); 
 	    }
 	    
-	    @GetMapping("/{id}/count-classes")
-	    public ResponseEntity<Integer> countClassesOfEnseignantById(@PathVariable int id) {
-	        int count = enseignantService.countClassOfEnseignantById(id);
-	        return ResponseEntity.ok(count);
-	    }
 	    
+	    @DeleteMapping("/{enseignantId}/classe/{classeId}")
+	    public ResponseEntity<String> removeClasseFromEnseignant(
+	    		@PathVariable int enseignantId, 
+	    		@PathVariable int classeId
+	    		) {
+	        try {
+	            enseignantService.removeClasseFromEnseignant(enseignantId, classeId);
+	            return ResponseEntity
+	            		.ok("Classe supprimée de l'enseignant avec succès "+enseignantService.getEnseignantById(enseignantId));
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	            		.body("Erreur lors de la suppression de la classe de l'enseignant : " + e.getMessage());
+	        }
+	    }
 
 	
 }

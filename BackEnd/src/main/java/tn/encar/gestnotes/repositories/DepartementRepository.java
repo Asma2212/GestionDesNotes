@@ -14,5 +14,7 @@ public interface DepartementRepository extends CrudRepository<Departement, Integ
 	public Departement findDepartementById(int id);
 	
 	public List<Departement> findByNom(String nom);
+	
+	public Departement findByClassesId(int classeId);
 
 }

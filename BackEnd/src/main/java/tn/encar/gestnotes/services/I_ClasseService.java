@@ -11,6 +11,7 @@ public interface I_ClasseService {
 	public Classe getClassseById(int id);
 	public List<Classe> getClassesByNiveau(int niveau);
 	public List<Classe> getClassesByIdEnseignant(int id);
+	public List<Classe> getClassesByIdDepartement(int id);
 	public void addNewClassse(Classe classe);
 	public void deleteClasseById(int id);
 	public int countClasseByNiveau(int niveau);
