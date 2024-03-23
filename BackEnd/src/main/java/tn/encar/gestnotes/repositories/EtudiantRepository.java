@@ -29,9 +29,6 @@ public interface EtudiantRepository extends CrudRepository<Etudiant, Integer>{
 
     int countByNiveau(int niveau);
     
-    Etudiant findById(int id);
-    
-    void deleteById(int id);
     
    /* @Query("SELECT COUNT(e) FROM Etudiant e")
     int countAllEtudiants()*/

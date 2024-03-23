@@ -23,7 +23,7 @@ public class EtudiantService implements I_EtudiantService{
 
     @Override
     public Etudiant getEtudiantById(int id) {
-        return etudiantRepository.findById(id);
+        return etudiantRepository.findById(id).orElse(null);
     }
 
     @Override

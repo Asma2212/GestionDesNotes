@@ -11,13 +11,12 @@ import tn.encar.gestnotes.repositories.PersonneRepository;
 import tn.encar.gestnotes.services.dto.SignInEtudiantDTO;
 import tn.encar.gestnotes.services.dto.SignUpEtudiantDTO;
 import tn.encar.gestnotes.services.impl.EtudiantService;
-import tn.encar.gestnotes.services.impl.PersonneService;
 
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/etudiants")
+@RequestMapping("/api/etudiant")
 public class EtudiantController {
 
     @Autowired
