@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
+import tn.encar.gestnotes.models.entities.Classe;
 import tn.encar.gestnotes.models.entities.Departement;
+import tn.encar.gestnotes.models.entities.Regle;
 import tn.encar.gestnotes.services.impl.DepartementService;
 
 
@@ -27,7 +30,7 @@ public class DepartementController {
 	@Autowired
 	private final DepartementService departementService;
 	
-	@GetMapping
+	@GetMapping("/all")
     public ResponseEntity<List<Departement>> getDepartements() {
         List<Departement> departements = departementService.getDepartements();
         return ResponseEntity.ok(departements);
@@ -35,8 +38,10 @@ public class DepartementController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Departement> getDepartementById(@PathVariable int id) {
-        Departement departement = departementService.getDepartementById(id);
-        return ResponseEntity.ok(departement);
+    		Departement departement = departementService.getDepartementById(id);
+            return ResponseEntity.ok(departement);
+    	
+        
     }
 
     @GetMapping("/get/nom/{nom}")
@@ -44,7 +49,19 @@ public class DepartementController {
         List<Departement> departements = departementService.getDepartementByNom(nom);
         return ResponseEntity.ok(departements);
     }
+    
+    @GetMapping("/get-classes/{id}")
+    public ResponseEntity<List<Classe>> getClassesByIdDepartement(@PathVariable int id){
+    	List<Classe> classes = departementService.getClassesByIdDepartement(id);
+    	return ResponseEntity.ok(classes);
+    }
 
+    @GetMapping("/get-regle/{id}")
+    public ResponseEntity<Regle> getRegleByDepartementId(@PathVariable int id) {
+    	Regle regle = departementService.getRegleByDepartementId(id);
+    	return ResponseEntity.ok(regle);
+    }
+    
     @PostMapping("/add")
     public ResponseEntity<Void> addNewDepartement(@RequestBody Departement departement) {
         departementService.addNewDepartement(departement);
@@ -52,7 +69,7 @@ public class DepartementController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Void> updateDepartement(@PathVariable int id, @RequestBody String nom) {
+    public ResponseEntity<Void> updateDepartement(@PathVariable int id, @RequestParam String nom) {
         departementService.updateDepartement(id, nom);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -78,7 +95,17 @@ public class DepartementController {
     @PostMapping("/{departementId}/classe/{classeId}")
     public ResponseEntity<Departement> assignClasseToDepartement(@PathVariable int departementId,
                                                                  @PathVariable int classeId) {
-        Departement departement = departementService.assignClasseToDepartement(departementId, classeId);
+    		Departement departement = departementService.assignClasseToDepartement(departementId, classeId);
+            return ResponseEntity.ok(departement);
+        
+    }
+    
+    
+    @DeleteMapping("/{departementId}/classe/{classeId}")
+    public ResponseEntity<Departement> removeClasseFromDepartement(@PathVariable int departementId,
+                                                                 @PathVariable int classeId) {
+        Departement departement = departementService.removeClasseFromDepartement(departementId, classeId);
         return ResponseEntity.ok(departement);
     }
+    
 }

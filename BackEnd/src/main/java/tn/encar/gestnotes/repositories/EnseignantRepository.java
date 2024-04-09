@@ -14,8 +14,6 @@ public interface EnseignantRepository extends CrudRepository<Enseignant, Integer
 	
 	public Enseignant findByid(int id);
 	
-	public Enseignant findByPosition(Statut position);
-	
-	public List<Enseignant>  findByEmail(String email);
+	public List<Enseignant> findByPosition(Statut position);
 	
 }

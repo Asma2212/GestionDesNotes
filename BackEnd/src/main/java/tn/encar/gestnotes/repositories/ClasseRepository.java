@@ -2,7 +2,10 @@ package tn.encar.gestnotes.repositories;
 
 import java.util.List;
 
+import org.springframework.data.jdbc.repository.query.Modifying;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import tn.encar.gestnotes.models.entities.Classe;
@@ -21,7 +24,5 @@ public interface ClasseRepository extends CrudRepository<Classe, Integer>{
 	public List<Classe> findClassesByNiveauAndGroupe(int niveau, char groupe);
 	
 	public int countByNiveau(int niveau);
-	
-	public Departement findDepartementById(int classeId); 
 	
 }

@@ -1,18 +1,22 @@
 package tn.encar.gestnotes.services.impl;
 
 import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import tn.encar.gestnotes.models.entities.Classe;
 import tn.encar.gestnotes.models.entities.Enseignant;
 import tn.encar.gestnotes.models.enums.Statut;
 import tn.encar.gestnotes.repositories.ClasseRepository;
 import tn.encar.gestnotes.repositories.EnseignantRepository;
+import tn.encar.gestnotes.repositories.PersonneRepository;
 import tn.encar.gestnotes.services.I_EnseignantService;
 
 
@@ -23,7 +27,10 @@ public class EnseignantService implements I_EnseignantService{
 	private EnseignantRepository enseignantRepository;
 	
 	@Autowired
-	private ClasseRepository classeRepository;
+	private ClasseRepository classeRepository; 
+	
+	@Autowired
+	private PersonneRepository personneRepository;
 	
 	public Enseignant saveEnseignant(Enseignant enseignant) {
 		return enseignantRepository.save(enseignant);
@@ -35,8 +42,8 @@ public class EnseignantService implements I_EnseignantService{
 	}
 
 	@Override
-	public Enseignant getEnseignantByPosition(Statut position) {
-		return enseignantRepository.findByPosition(position);
+	public List<Enseignant> getEnseignantByPosition(Statut position) {
+		return  enseignantRepository.findByPosition(position);
 	}
 	
 	@Override
@@ -65,20 +72,44 @@ public class EnseignantService implements I_EnseignantService{
 	
 	@Override
 	public void addNewEnseignant(Enseignant enseignant) {
-		if(!enseignantRepository.findByEmail(enseignant.getEmail()).isEmpty())
-			throw new IllegalStateException("Email existe deja!");
-		enseignantRepository.save(enseignant);
+		if (!personneRepository.findByEmail(enseignant.getEmail()).isEmpty()
+	            || !personneRepository.findByCin(enseignant.getCin()).isEmpty()) {
+	        throw new IllegalStateException("Email or CIN already exists!");
+	    }
+
+	    // Check if the position is DIRECTEUR, DIRECTEUR_DES_ETUDES, or DIRECTEUR_DES_STAGES
+	    if (enseignant.getPosition() == Statut.DIRECTEUR 
+	            || enseignant.getPosition() == Statut.DIRECTEUR_DES_ETUDES
+	            || enseignant.getPosition() == Statut.DIRECTEUR_DES_STAGES) {
+	        // Check if an Enseignant with the same position already exists
+	        if (!enseignantRepository.findByPosition(enseignant.getPosition()).isEmpty()) {
+	            throw new IllegalStateException("An Enseignant with the position " + enseignant.getPosition() + " already exists!");
+	        }
+	    }
+
+	    enseignantRepository.save(enseignant);
 	}
 
+	
+	@Transactional
 	@Override
 	public void updatePositionById(int id, Statut position) {
 		Enseignant enseignant = enseignantRepository.findById(id)
 				.orElseThrow(()->new IllegalStateException("Enseignant avec id "+id+" n'existe pas"));
-		if(position != null && position == enseignant.getPosition() )
-			enseignant.setPosition(position);
+		if(position != null && !position.equals(enseignant.getPosition()))
+			if (position != Statut.NONE) {
+                // Check if an enseignant with the new position already exists
+                if (!enseignantRepository.findByPosition(position).isEmpty()) {
+                    throw new IllegalStateException("An Enseignant with the position " + position + " already exists!");
+                }
+            }
+
+            // Update the position
+            enseignant.setPosition(position);
+            enseignantRepository.save(enseignant);
 		
-		enseignantRepository.save(enseignant);
 	}
+	
 	
 	@Override
 	public void deleteEnseignantById(int id) {
@@ -90,6 +121,8 @@ public class EnseignantService implements I_EnseignantService{
 	@Override
 	public int countClassOfEnseignantById(int id) {
 		Enseignant enseignant = enseignantRepository.findByid(id);
+		if(enseignant == null)
+			throw new IllegalStateException();
 	    if (enseignant != null && enseignant.getClassesAffectees() != null) {
 	        return enseignant.getClassesAffectees().size();
 	    }
@@ -111,6 +144,5 @@ public class EnseignantService implements I_EnseignantService{
 		enseignant.getClassesAffectees().remove(classe);
 		return enseignantRepository.save(enseignant);
 	}
-	
 
 }

@@ -1,6 +1,7 @@
 package tn.encar.gestnotes.services.impl;
 
 import java.sql.Date;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
-import net.sf.jsqlparser.expression.operators.arithmetic.Concat;
 import tn.encar.gestnotes.models.entities.Personne;
 import tn.encar.gestnotes.repositories.PersonneRepository;
 import tn.encar.gestnotes.services.I_PersonneService;
@@ -63,7 +63,7 @@ public class PersonneService implements I_PersonneService {
 		Personne personne = personneRepository.findById(id).orElseThrow(()->new IllegalStateException("Personne par id "+id+" n'existe pas!"));
 
 		if(cin != 0 && cin != personne.getCin()) {
-			if(personneRepository.findByCin(cin) != null)
+			if(!personneRepository.findByCin(cin).isEmpty())
 				throw new IllegalStateException("cin existe deja!");
 		}
 		
@@ -95,19 +95,20 @@ public class PersonneService implements I_PersonneService {
 
 
 	@Override
-	public void updateEmailById(String email, int employeId) {
-		Personne personne = personneRepository.findByid(employeId);
+	public void updateEmailById(String email, int id) {
+		Personne personne = personneRepository.findByid(id);
 		if(!personneRepository.findByEmail(email).isEmpty() && !Objects.equals(email, personne.getEmail()))
-			personne.setEmail(email);
-		
+			throw new IllegalStateException("Email existe deja!");
+		personne.setEmail(email);
 		personneRepository.save(personne);
 	}
 
 	@Override
 	public void updatePasswordById(String mpd, int id) {
 		Personne personne = personneRepository.findByid(id);
-		if(!Objects.equals(mpd, personne.getMotDePasse()))
-			personne.setMotDePasse(mpd);
+		if(Objects.equals(mpd, personne.getMotDePasse()))
+			throw new IllegalStateException("ne pas utilise le meme mot de passe");
+		personne.setMotDePasse(mpd);
 		personneRepository.save(personne);
 	}
 	

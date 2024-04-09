@@ -45,20 +45,22 @@ public class ClasseService implements I_ClasseService{
 
 	@Override
 	public List<Classe> getClassesByIdEnseignant(int id) {
-		Enseignant enseignant = enseignantRepository.findByid(id);
+		Enseignant enseignant = enseignantRepository.findById(id)
+				.orElseThrow(()->new IllegalStateException("Enseignant avec id "+id+" n'existe pas"));
 		Set<Classe> classes = enseignant.getClassesAffectees();
 		return  new ArrayList<>(classes);
 	}
 	
 	@Override
-	public List<Classe> getClassesByIdDepartement(int id) {
-		Departement departement = departementRepository.findDepartementById(id);
-		return new ArrayList<>(departement.getClasses());
-	}
-	
-	@Override
 	public Departement getDepartementByClasseId(int classeId) {
-		return classeRepository.findDepartementById(classeId);
+		Classe classe = classeRepository.findById(classeId)
+				.orElseThrow(()->new IllegalStateException("classe avec id "+classeId+"n'existe pas!"));
+		List<Departement> departements = (List<Departement>) departementRepository.findAll();
+		for(Departement dp : departements){
+			if(dp.getClasses().contains(classe))
+				return dp;
+		}
+		return null;
 	}
 
 	@Override

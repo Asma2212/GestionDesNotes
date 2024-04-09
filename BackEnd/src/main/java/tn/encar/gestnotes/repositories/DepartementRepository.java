@@ -6,15 +6,15 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import tn.encar.gestnotes.models.entities.Departement;
+import tn.encar.gestnotes.models.entities.Regle;
 
 
 @Repository
 public interface DepartementRepository extends CrudRepository<Departement, Integer>{
 
-	public Departement findDepartementById(int id);
+	public Departement findByid(int id);
 	
-	public List<Departement> findByNom(String nom);
+	public List<Departement> findByNom(String nom);	 
 	
-	public Departement findByClassesId(int classeId);
-
+	public Regle findRegleById(int id);
 }

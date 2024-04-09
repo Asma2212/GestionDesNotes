@@ -34,5 +34,13 @@ public class Classe {
 	@ManyToMany(mappedBy = "classesAffectees")
 	private Set<Enseignant> enseignants= new HashSet<>();
 	
+	@Override
+    public String toString() {
+        return "Classe{" +
+                "id=" + id +
+                ", niveau=" + niveau +
+                ", groupe=" + groupe +
+                '}';
+    }
 	
 }

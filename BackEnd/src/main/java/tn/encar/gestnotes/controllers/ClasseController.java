@@ -2,6 +2,9 @@ package tn.encar.gestnotes.controllers;
 
 import java.util.List;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import tn.encar.gestnotes.models.entities.Classe;
+import tn.encar.gestnotes.models.entities.Departement;
 import tn.encar.gestnotes.services.impl.ClasseService;
 
 
@@ -25,6 +29,9 @@ public class ClasseController {
 
 	@Autowired
 	private final ClasseService classeService;
+	
+	 private static final Logger logger = LoggerFactory.getLogger(ClasseController.class);
+
 	
 	@GetMapping("/all")
     public ResponseEntity<List<Classe>> getClasses() {
@@ -47,18 +54,30 @@ public class ClasseController {
 	//find all classes belonging to a specific enseignant by it's id
 	@GetMapping("/enseignant/{id}")
     public ResponseEntity<List<Classe>> getClassesByIdEnseignant(@PathVariable int id) {
+		try {
         List<Classe> classes = classeService.getClassesByIdEnseignant(id);
         return new ResponseEntity<>(classes, HttpStatus.OK);
+        }catch(IllegalStateException e) {
+        	return ResponseEntity.notFound().build();
+        }
     }
 	
+	@GetMapping("/{classeId}/departement")
+	public  ResponseEntity<Departement> getDepartementByClasseId(@PathVariable int classeId) {
+		Departement departement = classeService.getDepartementByClasseId(classeId);
+		return ResponseEntity.ok(departement);
+	}
+	
 	@PostMapping("/add")
-    public ResponseEntity<Void> addNewClasse(@RequestBody Classe classe) {
+    public ResponseEntity<List<Classe>> addNewClasse(@RequestBody Classe classe) {
         try {
             classeService.addNewClassse(classe);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (IllegalStateException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+		
     }
 	
 	@DeleteMapping("/delete/{id}")

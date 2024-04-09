@@ -12,7 +12,7 @@ public interface PersonneRepository extends CrudRepository<Personne, Integer>{
 
 	public List<Personne> findByEmail(String email);
 
-	public Personne findByCin(int cin);
+	public List<Personne> findByCin(int cin);
 	
 	public Personne findByid(int id);
 	

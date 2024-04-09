@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import tn.encar.gestnotes.models.entities.Enseignant;
 import tn.encar.gestnotes.models.enums.Statut;
 import tn.encar.gestnotes.services.impl.EnseignantService;
+import tn.encar.gestnotes.services.impl.PersonneService;
 
 
 @AllArgsConstructor
@@ -28,6 +29,9 @@ public class EnseignantController {
 
 	@Autowired
 	private final EnseignantService enseignantService;
+	
+	@Autowired
+	private final PersonneService personneService;
 	
 	
 	 @PostMapping("/save")
@@ -47,12 +51,12 @@ public class EnseignantController {
 	 }
 	 
 	 @GetMapping("/get/position/{position}")
-	 public ResponseEntity<Enseignant> getEnseignantByPosition(@PathVariable Statut position){
-		 Enseignant enseignant = enseignantService.getEnseignantByPosition(position);
-		 if(enseignant != null )
-			 return new ResponseEntity<>(enseignant, HttpStatus.OK);
+	 public ResponseEntity<List<Enseignant>> getEnseignantByPosition(@PathVariable Statut position){
+		List<Enseignant> enseignants = enseignantService.getEnseignantByPosition(position);
+		 if(!enseignants.isEmpty() )
+			 return ResponseEntity.ok(enseignants);
 		 else 
-			 return new ResponseEntity<>(enseignant, HttpStatus.NOT_FOUND);
+			 return ResponseEntity.notFound().build();
 	 }
 
 	 @GetMapping("/all")
@@ -77,14 +81,14 @@ public class EnseignantController {
 	 public ResponseEntity<Void> deleteEnseignantById(@PathVariable int id) {
 		try {
 		 enseignantService.deleteEnseignantById(id);
-	     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	     return new ResponseEntity<>(HttpStatus.NO_CONTENT)	;
 		}catch(IllegalStateException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	 }
 	 
 	 // Controller method to update enseignant position by ID
-	 @PutMapping("/get/{id}/position/position{}")
+	 @PutMapping("/get/{id}/position")
 	 public ResponseEntity<Void> updatePositionById(
 		 @PathVariable int id, 
 	     @RequestParam Statut position){
@@ -93,8 +97,36 @@ public class EnseignantController {
 	         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	     }catch (IllegalThreadStateException e) {
 	         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+         }catch(IllegalStateException e) {
+	     	return new ResponseEntity<>(HttpStatus.CONFLICT);
+	     	}
+	 }	 
+	 
+	 @PutMapping("/update-email/{id}")
+	 public ResponseEntity<Void> updateEmailById(
+		 @PathVariable int id, 
+	     @RequestParam String email){
+	     try {
+	    	 personneService.updateEmailById(email, id);
+	         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	     }catch (IllegalThreadStateException e) {
+	         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+         }catch(IllegalStateException e) {
+        	 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
          }
 	 }	 
+	 
+	 @PutMapping("/update-motdepasse/{id}")
+	 public ResponseEntity<Void> updateMotDePasseById(
+		 @PathVariable int id, 
+	     @RequestParam String motdepasse){
+	     try {
+	    	 personneService.updatePasswordById(motdepasse, id);
+	         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	     }catch (IllegalThreadStateException e) {
+	         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+         }
+	 }	
 	 
 	 // Controller method to add a new enseignant
 	    @PostMapping("/add")
@@ -110,11 +142,15 @@ public class EnseignantController {
 	    
 	    @GetMapping("/{id}/count-classes")
 	    public ResponseEntity<Integer> countClassesOfEnseignantById(@PathVariable int id) {
-	        int count = enseignantService.countClassOfEnseignantById(id);
+	       try {
+	    	int count = enseignantService.countClassOfEnseignantById(id);
 	        return ResponseEntity.ok(count);
+	        }catch(IllegalStateException e) {
+	        	return ResponseEntity.notFound().build();
+	        }
 	    }
 	    
-	    @PutMapping("/{enseignantId}/classe/{classeId}")
+	    @PutMapping("/{enseignantId}/addClasse/{classeId}")
 	    public Enseignant assignClasseToEnseignant(
 	    		@PathVariable int enseignantId,
 	    		@PathVariable int classeId
@@ -123,7 +159,7 @@ public class EnseignantController {
 	    }
 	    
 	    
-	    @DeleteMapping("/{enseignantId}/classe/{classeId}")
+	    @DeleteMapping("/{enseignantId}/removeClasse/{classeId}")
 	    public ResponseEntity<String> removeClasseFromEnseignant(
 	    		@PathVariable int enseignantId, 
 	    		@PathVariable int classeId
