@@ -4,20 +4,29 @@ import java.util.ArrayList;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import tn.encar.gestnotes.config.JwtService;
 import tn.encar.gestnotes.models.entities.Classe;
 import tn.encar.gestnotes.models.entities.Enseignant;
+import tn.encar.gestnotes.models.entities.Etudiant;
+import tn.encar.gestnotes.models.entities.Personne;
+import tn.encar.gestnotes.models.enums.Role;
 import tn.encar.gestnotes.models.enums.Statut;
 import tn.encar.gestnotes.repositories.ClasseRepository;
 import tn.encar.gestnotes.repositories.EnseignantRepository;
 import tn.encar.gestnotes.repositories.PersonneRepository;
 import tn.encar.gestnotes.services.I_EnseignantService;
+import tn.encar.gestnotes.services.dto.AuthResponse;
+import tn.encar.gestnotes.services.dto.SignUpDTO;
 
 
 @Service
@@ -31,6 +40,18 @@ public class EnseignantService implements I_EnseignantService{
 	
 	@Autowired
 	private PersonneRepository personneRepository;
+	
+    @Autowired
+    EmailSenderService emailSenderService;
+	
+    @Autowired
+	private JwtService jwtService ;
+    
+    @Autowired
+	private PasswordEncoder passwordEncoder;
+    
+	@Autowired
+	private AuthenticationManager authManager;
 	
 	public Enseignant saveEnseignant(Enseignant enseignant) {
 		return enseignantRepository.save(enseignant);
@@ -48,7 +69,12 @@ public class EnseignantService implements I_EnseignantService{
 	
 	@Override
 	public Enseignant getEnseignantById(int id) {
-		return enseignantRepository.findByid(id);
+		return enseignantRepository.findById(id).get();
+	}
+	
+	@Override
+	public Boolean existsByEmail(String email) {
+		return enseignantRepository.existsByEmail(email);
 	}
 
 	@Override
@@ -120,7 +146,7 @@ public class EnseignantService implements I_EnseignantService{
 
 	@Override
 	public int countClassOfEnseignantById(int id) {
-		Enseignant enseignant = enseignantRepository.findByid(id);
+		Enseignant enseignant = enseignantRepository.findById(id).get();
 		if(enseignant == null)
 			throw new IllegalStateException();
 	    if (enseignant != null && enseignant.getClassesAffectees() != null) {
@@ -131,7 +157,7 @@ public class EnseignantService implements I_EnseignantService{
 
 	@Override
 	public Enseignant assignClasseToEnseignant(int enseignantId, int classeId) {
-		Enseignant enseignant = enseignantRepository.findByid(enseignantId);
+		Enseignant enseignant = enseignantRepository.findById(enseignantId).get();
 		Classe classe = classeRepository.findById(classeId).get();
 		enseignant.getClassesAffectees().add(classe);
 		return enseignantRepository.save(enseignant);
@@ -139,10 +165,30 @@ public class EnseignantService implements I_EnseignantService{
 
 	@Override
 	public Enseignant removeClasseFromEnseignant(int enseignantId, int classeId) {
-		Enseignant enseignant = enseignantRepository.findByid(enseignantId);
+		Enseignant enseignant = enseignantRepository.findById(enseignantId).get();
 		Classe classe = classeRepository.findById(classeId).get();
 		enseignant.getClassesAffectees().remove(classe);
 		return enseignantRepository.save(enseignant);
+	}
+	
+	public AuthResponse register(Enseignant request) {
+		String mp = request.getMotDePasse() ;
+		request.setMotDePasse(passwordEncoder.encode(request.getMotDePasse()));
+			saveEnseignant(request);
+			emailSenderService.sendEmail(request.getEmail(), "testing", "Bienvenue à ENIC Notes", request.getCin(), "#####" ,Role.ENSEIGNANT.name());
+        var jwtToken = jwtService.generateToken(request);
+		return AuthResponse.builder()
+				.nom(request.getNom())
+				.prenom(request.getPrenom())
+				.token(jwtToken)
+				.build();
+	}
+	
+	public void registerEnsByAdmin(Enseignant request) {
+		String mp = request.getMotDePasse();
+		request.setMotDePasse(passwordEncoder.encode(request.getMotDePasse()));
+			saveEnseignant(request);
+			emailSenderService.sendEmail(request.getEmail(), "testing", "Bienvenue à ENIC Notes", request.getCin(), mp,Role.ENSEIGNANT.name());
 	}
 
 }

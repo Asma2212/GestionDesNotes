@@ -5,11 +5,15 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,11 +33,13 @@ public class Classe {
 	private int id;
 	private int niveau;
 	private char groupe;
-
 	@JsonIgnore
 	@ManyToMany(mappedBy = "classesAffectees")
 	private Set<Enseignant> enseignants= new HashSet<>();
-	
+	@JsonIgnore 
+	@OneToMany( cascade =
+			CascadeType.ALL, mappedBy = "classe")
+			private Set<Etudiant> etudiants;
 	@Override
     public String toString() {
         return "Classe{" +

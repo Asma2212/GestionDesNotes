@@ -8,11 +8,21 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
+import { FormLoginComponent } from './pages/forms copy/login/login.component';
+import { FormRegisterComponent } from './pages/forms copy/register/register.component';
+import { AuthAdminGuard } from './services/auth_guard/auth-admin.guard';
+import { AuthEtudiantGuard } from './services/auth_guard/auth-etudiant.guard';
+import { AuthEnseignantGuard } from './services/auth_guard/auth-enseignant.guard';
 
 export const routes: Routes = [
   {
     path: 'pages',
     loadChildren: () => import('./pages/pages.module')
+      .then(m => m.PagesModule),
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages copy/pages.module')
       .then(m => m.PagesModule),
   },
   {
@@ -25,11 +35,11 @@ export const routes: Routes = [
       },
       {
         path: 'login',
-        component: NbLoginComponent,
+        component: FormLoginComponent,
       },
       {
         path: 'register',
-        component: NbRegisterComponent,
+        component: FormRegisterComponent,
       },
       {
         path: 'logout',
@@ -56,6 +66,7 @@ const config: ExtraOptions = {
 @NgModule({
   imports: [RouterModule.forRoot(routes, config)],
   exports: [RouterModule],
+  providers: [AuthAdminGuard,AuthEtudiantGuard,AuthEnseignantGuard] 
 })
 export class AppRoutingModule {
 }

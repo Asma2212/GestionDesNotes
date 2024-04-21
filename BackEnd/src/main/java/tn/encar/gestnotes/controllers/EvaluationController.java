@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.encar.gestnotes.models.entities.Etudiant;
 import tn.encar.gestnotes.models.entities.Evaluation;
+import tn.encar.gestnotes.models.entities.Matiere;
+import tn.encar.gestnotes.services.impl.EtudiantService;
 import tn.encar.gestnotes.services.impl.EvaluationService;
+import tn.encar.gestnotes.services.impl.MatiereService;
 
 @RestController
 @RequestMapping("/api/evaluation")
@@ -23,8 +27,28 @@ public class EvaluationController {
 	@Autowired
 	EvaluationService evaluationService;
 	
+	@Autowired
+	EtudiantService etudiantService;
+	
+	@Autowired
+	MatiereService matiereService;
+	
     @PostMapping("/save")
     public ResponseEntity<Evaluation> saveEvaluation(@RequestBody Evaluation evaluation) {
+    	int idEtd;
+    	Long idMatiere;
+    	Etudiant etudiant;
+    	Matiere matiere;
+    	if(evaluation.getEtudiant() != null) {
+    	    idEtd = evaluation.getEtudiant().getId();	
+    	    etudiant = etudiantService.getEtudiantById(idEtd);
+    	    evaluation.setEtudiant(etudiant);
+    	}
+    	if(evaluation.getMatiere() != null) {
+    	idMatiere = evaluation.getMatiere().getIdMatiere();
+    	matiere = matiereService.getMatiereById(idMatiere);
+    	evaluation.setMatiere(matiere);
+    	}
         Evaluation savedEvaluation = evaluationService.saveEvaluation(evaluation);
         return new ResponseEntity<>(savedEvaluation, HttpStatus.CREATED);
     }

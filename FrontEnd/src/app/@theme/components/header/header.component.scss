@@ -2,10 +2,37 @@
 @import '@nebular/theme/styles/global/breakpoints';
 @import '../../styles/themes';
 
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #fff1df03;
+}
+
+/* Style the links inside the navigation bar */
+.topnav nb-action {
+  float: left;
+  color: #524b4b;
+  text-align: center;
+  padding: 14px 0 14px 40px;
+  text-decoration: none;
+  font-size: 17px;
+  margin:0 13px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Change the color of links on hover */
+.topnav nb-action:hover {
+  text-decoration: underline;
+  color: rgba(35, 54, 229, 0.959);
+}
+
+/* Add a color to the active/current link */
+
+
 @include nb-install-component() {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+
 
   .logo-container {
     display: flex;
@@ -29,7 +56,7 @@
 
   .header-container {
     display: flex;
-    align-items: center;
+    align-items: right;
     width: auto;
 
     .sidebar-toggle {
@@ -68,3 +95,62 @@
     }
   }
 }
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  .rowb {
+    margin: -0.5rem;
+  }
+
+  button[nbButton] {
+    margin: 0.5rem;
+  }
+  .decob{
+    margin: -0.9rem;
+  }
+
+  .action-icon {
+    @include nb-ltr(margin-right, 0.5rem);
+    @include nb-rtl(margin-left, 0.5rem);
+  }
+
+  .actions-card {
+    height: 8rem;
+  }
+}
+
+.buttons-row{
+  background: linear-gradient(0deg, rgb(8, 58, 194) 0%, rgb(44, 13, 201) 100%);
+  border: 1px solid rgb(0, 55, 255);
+  margin-right: -100px;
+}
+.deco_button{
+  background: linear-gradient(0deg, rgb(201, 13, 13) 0%, rgb(201, 13, 13) 100%);
+  border: 1px solid red;
+}
+
+button:hover {
+  text-decoration: none;
+  color: #fff;
+}
+button:before {
+  position: absolute;
+  content: '';
+  display: inline-block;
+  top: -180px;
+  left: 0;
+  width: 30px;
+  height: 100%;
+  background-color: #fff;
+  animation: shiny-btn1 3s ease-in-out infinite;
+}
+button:active{
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+  -4px -4px 6px 0 rgba(116, 125, 136, .2),
+  inset -4px -4px 6px 0 rgba(255,255,255,.2),
+  inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+}
+button:hover{
+  opacity: 0.7;
+}
+

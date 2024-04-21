@@ -2,19 +2,28 @@ import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
-    title: 'E-commerce',
-    icon: 'shopping-cart-outline',
-    link: '/pages/dashboard',
-    home: true,
-  },
-  {
-    title: 'IoT Dashboard',
+    title: 'Accueil',
     icon: 'home-outline',
-    link: '/pages/iot-dashboard',
+    link: '/pages/home',
+    home : true
   },
   {
-    title: 'FEATURES',
+    title: 'Autres',
     group: true,
+  },
+  {
+    title: 'Authentification',
+    icon: 'lock-outline',
+    children: [
+      {
+        title: 'Se connecter',
+        link: '/pages/connect/login',
+      },
+      {
+        title: 'S\'inscrire',
+        link: '/pages/connect/register',
+      }
+    ],
   },
   {
     title: 'Layout',
@@ -212,7 +221,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
-  {
+  /*{
     title: 'Miscellaneous',
     icon: 'shuffle-2-outline',
     children: [
@@ -221,25 +230,25 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/miscellaneous/404',
       },
     ],
-  },
+  },*/
   {
-    title: 'Auth',
+    title: 'Authentification',
     icon: 'lock-outline',
     children: [
       {
-        title: 'Login',
+        title: 'Se Connecter',
         link: '/auth/login',
       },
       {
-        title: 'Register',
+        title: 'S\'inscrire',
         link: '/auth/register',
       },
       {
-        title: 'Request Password',
+        title: 'Mot de passe oublié',
         link: '/auth/request-password',
       },
       {
-        title: 'Reset Password',
+        title: 'Changer Mot de passe',
         link: '/auth/reset-password',
       },
     ],

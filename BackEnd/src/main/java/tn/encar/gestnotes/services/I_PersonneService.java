@@ -2,6 +2,7 @@ package tn.encar.gestnotes.services;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import tn.encar.gestnotes.models.entities.Personne;
 
@@ -11,6 +12,7 @@ public interface I_PersonneService {
 	public Personne getPersonneById(int id);
     public List<Personne> getPersonnesByRole(String role);
     public Personne getPersonneByTel(int tel);
+    public Optional<Personne> findByEmail(String email);
 	public void addNewPersonne(Personne personne);
 	public void deletePersonne(int  id);
 	public void updatePersonne(int id, int cin, String nom, String prenom, int tel, String email, Date dateNaiss, String mdp);

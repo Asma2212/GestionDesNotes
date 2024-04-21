@@ -3,27 +3,48 @@
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
-    <a class="logo" href="#" (click)="navigateHome()">ngx-<span>admin</span></a>
+    <a class="logo" routerLink="['/pages/home']" routerLinkActive="router-link-active"  (click)="navigateHome()" style="cursor: pointer;"><img src="/assets/photos/logo1.JPG" alt="" width="150%"></a>
   </div>
-  <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
+  <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary" style="margin-left:60px">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>
-</div>
-
-<div class="header-container">
+  <div style="display: flex;margin-left: -30px;">
+    <div *ngIf="!auth" style="margin-right : 350px"></div>
+  <nb-actions size="large" class="topnav">
+    <nb-action (click)="redirectAccueil()">Accueil</nb-action>
+    <nb-action *ngIf="auth" (click)="redirectNotes()">Notes</nb-action>
+    <nb-action *ngIf="auth" (click)="redirectResultat()">Resultat</nb-action>
+    <nb-action *ngIf="auth" (click)="redirectProfile()">Profile</nb-action>
+    <nb-action  (click)="redirectContact()">Contact</nb-action>
+  </nb-actions>
+  <div *ngIf="!auth" style="margin-left : 50px"></div>
   <nb-actions size="small">
-
     <nb-action class="control-item">
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>
-    <nb-action class="control-item" icon="email-outline"></nb-action>
     <nb-action class="control-item" icon="bell-outline"></nb-action>
-    <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
-      <nb-user [nbContextMenu]="userMenu"
+     <nb-action class="user-action" *nbIsGranted="['view', 'user']" > 
+      <!-- <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"
-               [name]="user?.name"
+               [name]="nomPrenom"
                [picture]="user?.picture">
-      </nb-user>
+      </nb-user> -->
+        <nb-user name="{{nomPrenom}}"></nb-user>
+    </nb-action>
+    <nb-action *ngIf="!auth">
+      <div class="rowb">
+        <button class="buttons-row" nbButton status='primary' style="text-transform: lowercase;" (click)="connecter()" >
+         Se connecter
+        </button>
+      </div>
+    </nb-action>
+    <nb-action *ngIf="auth" >
+      <div class="decob">
+        <button class="deco_button" nbButton status='danger' style="text-transform: lowercase;" (click)="deconnecter()" >
+         Deconnexion
+        </button>
+      </div>
     </nb-action>
   </nb-actions>
+</div>
 </div>

@@ -24,18 +24,23 @@ public class MatiereController {
 	MatiereService matiereService;
 	
     @PostMapping("/save")
-    public ResponseEntity<Matiere> saveMatiere(@RequestBody Matiere matiere) {
-        Matiere savedMatiere = matiereService.saveMatiere(matiere);
-        return new ResponseEntity<>(savedMatiere, HttpStatus.CREATED);
+    public ResponseEntity<?> saveMatiere(@RequestBody Matiere matiere) {
+    	if(matiereService.findByNomMatiere(matiere.getNomMatiere()) == null) {
+    	Matiere savedMatiere = matiereService.saveMatiere(matiere);
+        return new ResponseEntity<>(savedMatiere, HttpStatus.CREATED);	
+    	}
+    	else {
+    		return ResponseEntity.status(HttpStatus.CONFLICT).body("Cette matiere existe déjà");
+    	}
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Matiere> getMatiereById(@PathVariable Long id) {
+    public ResponseEntity<?> getMatiereById(@PathVariable Long id) {
         Matiere matiere = matiereService.getMatiereById(id);
         if (matiere != null) {
             return new ResponseEntity<>(matiere, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        	return ResponseEntity.status(HttpStatus.CONFLICT).body("Cette matiere n'existe pas");
         }
     }
 

@@ -5,6 +5,8 @@ import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../services/Auth.service';
 
 @Component({
   selector: 'ngx-header',
@@ -16,6 +18,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  email : string;
+  nomPrenom : string = "Anonyme";
+  auth:Boolean=false;
+  role : string;
 
   themes = [
     {
@@ -38,19 +44,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Profile' }, { title: 'Deconnexion' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,
+              private router: Router,
+              private authService : AuthService) {
   }
 
   ngOnInit() {
+    if(this.authService.isLoggedInAdmin()) 
+      {
+        this.auth = true;
+        this.role = localStorage.getItem("role");
+      }
+      if(this.auth){
+    this.email = localStorage.getItem("username");
+    this.nomPrenom = localStorage.getItem("nomPrenom");
     this.currentTheme = this.themeService.currentTheme;
-
+      }
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users: any) => this.user = users.nick);
@@ -91,4 +107,59 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.navigateHome();
     return false;
   }
+
+  connecter(){
+    
+    this.router.navigate(['/pages/connect/login']);
+  }
+  redirectContact(){
+    if(this.auth && this.role=="ADMIN"){
+      this.router.navigate(['/admin/contact']);
+    }else
+    if(this.auth && this.role=="ENSEIGNANT"){
+      this.router.navigate(['/enseignant/contact']);
+    }else
+    this.router.navigate(['/pages/contact']);
+  }
+  redirectAccueil(){
+    if(this.auth && this.role=="ADMIN"){
+      this.router.navigate(['/admin/home']);
+    }else
+    if(this.auth && this.role=="ENSEIGNANT"){
+      this.router.navigate(['/enseignant/home']);
+    }else
+    this.router.navigate(['/pages/home']);
+  }
+  redirectNotes(){
+    if(this.auth && this.role=="ADMIN"){
+      this.router.navigate(['/admin/notes']);
+    }else
+    if(this.auth && this.role=="ENSEIGNANT"){
+      this.router.navigate(['/enseignant/notes']);
+    }else
+    this.router.navigate(['/pages/notes']);
+  }
+  redirectResultat(){
+    if(this.auth && this.role=="ADMIN"){
+      this.router.navigate(['/admin/resultat']);
+    }else
+    if(this.auth && this.role=="ENSEIGNANT"){
+      this.router.navigate(['/enseignant/resultat']);
+    }else
+    this.router.navigate(['/pages/resultat']);
+  }
+  redirectProfile(){
+    if(this.auth && this.role=="ADMIN"){
+      this.router.navigate(['/admin/profile']);
+    }else
+    if(this.auth && this.role=="ENSEIGNANT"){
+      this.router.navigate(['/enseignant/profile']);
+    }else
+    this.router.navigate(['/pages/profile']);
+  }
+
+  deconnecter(){
+    localStorage.clear();
+  }
+
 }

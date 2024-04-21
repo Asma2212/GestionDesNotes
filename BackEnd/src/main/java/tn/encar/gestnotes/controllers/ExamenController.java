@@ -13,18 +13,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import tn.encar.gestnotes.models.entities.Etudiant;
 import tn.encar.gestnotes.models.entities.Examen;
+import tn.encar.gestnotes.models.entities.Matiere;
+import tn.encar.gestnotes.services.impl.EtudiantService;
 import tn.encar.gestnotes.services.impl.ExamenService;
+import tn.encar.gestnotes.services.impl.MatiereService;
 
 @RestController
-@RequestMapping("/api/examen")
+@RequestMapping("/api/note/examen")
 public class ExamenController {
 
 	@Autowired
 	ExamenService examenService;
 	
+	@Autowired
+	EtudiantService etudiantService;
+	
+	@Autowired
+	MatiereService matiereService;
+	
     @PostMapping("/save")
     public ResponseEntity<Examen> saveExamen(@RequestBody Examen examen) {
+    	int idEtd;
+    	Long idMatiere;
+    	Etudiant etudiant;
+    	Matiere matiere;
+    	if(examen.getEtudiant() != null) {
+    	    idEtd = examen.getEtudiant().getId();	
+    	    etudiant = etudiantService.getEtudiantById(idEtd);
+        	examen.setEtudiant(etudiant);
+    	}
+    	if(examen.getMatiere() != null) {
+    	idMatiere = examen.getMatiere().getIdMatiere();
+    	matiere = matiereService.getMatiereById(idMatiere);
+    	examen.setMatiere(matiere);
+    	}
         Examen savedExamen = examenService.saveExamen(examen);
         return new ResponseEntity<>(savedExamen, HttpStatus.CREATED);
     }

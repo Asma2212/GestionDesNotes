@@ -10,4 +10,5 @@ public interface I_MatiereService {
     Matiere getMatiereById(Long id);
     List<Matiere> getAllMatiere();
     void deleteMatiereById(Long id);
+    Matiere findByNomMatiere(String nomMatiere);
 }

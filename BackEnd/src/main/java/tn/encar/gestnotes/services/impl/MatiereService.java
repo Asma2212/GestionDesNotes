@@ -34,4 +34,9 @@ public class MatiereService implements I_MatiereService{
 	public void deleteMatiereById(Long id) {
 		matiereRepository.deleteById(id);
 	}
+	
+	@Override
+	public Matiere findByNomMatiere(String nomMatiere) {
+		return matiereRepository.findByNomMatiere(nomMatiere);
+	}
 }

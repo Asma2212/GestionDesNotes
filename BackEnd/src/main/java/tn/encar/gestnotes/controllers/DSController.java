@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.encar.gestnotes.models.entities.DS;
+import tn.encar.gestnotes.models.entities.Etudiant;
+import tn.encar.gestnotes.models.entities.Matiere;
 import tn.encar.gestnotes.services.impl.DSService;
+import tn.encar.gestnotes.services.impl.EtudiantService;
+import tn.encar.gestnotes.services.impl.MatiereService;
 
 @RestController
 @RequestMapping("/api/ds")
@@ -23,8 +27,28 @@ public class DSController {
 	@Autowired
 	DSService dsService;
 	
+	@Autowired
+	EtudiantService etudiantService;
+	
+	@Autowired
+	MatiereService matiereService;
+	
     @PostMapping("/save")
     public ResponseEntity<DS> saveDS(@RequestBody DS ds) {
+    	int idEtd;
+    	Long idMatiere;
+    	Etudiant etudiant;
+    	Matiere matiere;
+    	if(ds.getEtudiant() != null) {
+    	    idEtd = ds.getEtudiant().getId();	
+    	    etudiant = etudiantService.getEtudiantById(idEtd);
+        	ds.setEtudiant(etudiant);
+    	}
+    	if(ds.getMatiere() != null) {
+    	idMatiere = ds.getMatiere().getIdMatiere();
+    	matiere = matiereService.getMatiereById(idMatiere);
+    	ds.setMatiere(matiere);
+    	}
         DS savedDS = dsService.saveDS(ds);
         return new ResponseEntity<>(savedDS, HttpStatus.CREATED);
     }

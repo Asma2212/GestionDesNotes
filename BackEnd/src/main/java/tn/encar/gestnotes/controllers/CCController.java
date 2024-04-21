@@ -14,17 +14,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.encar.gestnotes.models.entities.CC;
+import tn.encar.gestnotes.models.entities.Etudiant;
+import tn.encar.gestnotes.models.entities.Matiere;
 import tn.encar.gestnotes.services.impl.CCService;
+import tn.encar.gestnotes.services.impl.EtudiantService;
+import tn.encar.gestnotes.services.impl.MatiereService;
 
 @RestController
-@RequestMapping("/api/cc")
+@RequestMapping("/api/note/cc")
 public class CCController {
 
 	@Autowired
 	CCService ccService;
 	
+	@Autowired
+	EtudiantService etudiantService;
+	
+	@Autowired
+	MatiereService matiereService;
+	
     @PostMapping("/save")
     public ResponseEntity<CC> saveCC(@RequestBody CC cc) {
+    	int idEtd;
+    	Long idMatiere;
+    	Etudiant etudiant;
+    	Matiere matiere;
+    	if(cc.getEtudiant() != null) {
+    	    idEtd = cc.getEtudiant().getId();	
+    	    etudiant = etudiantService.getEtudiantById(idEtd);
+        	cc.setEtudiant(etudiant);
+    	}
+    	if(cc.getMatiere() != null) {
+    	idMatiere = cc.getMatiere().getIdMatiere();
+    	matiere = matiereService.getMatiereById(idMatiere);
+    	cc.setMatiere(matiere);
+    	}
         CC savedCC = ccService.saveCC(cc);
         return new ResponseEntity<>(savedCC, HttpStatus.CREATED);
     }

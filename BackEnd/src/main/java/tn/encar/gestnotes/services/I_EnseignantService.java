@@ -1,6 +1,7 @@
 package tn.encar.gestnotes.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import tn.encar.gestnotes.models.entities.Enseignant;
 import tn.encar.gestnotes.models.enums.Statut;
@@ -18,5 +19,6 @@ public interface I_EnseignantService {
 	public int countClassOfEnseignantById(int id);
 	public Enseignant assignClasseToEnseignant(int enseignantId, int classeId);
     public Enseignant removeClasseFromEnseignant(int enseignantId, int classeId);
+	Boolean existsByEmail(String email);
 		
 }

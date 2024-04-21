@@ -12,8 +12,8 @@ import tn.encar.gestnotes.models.enums.Statut;
 @Repository
 public interface EnseignantRepository extends CrudRepository<Enseignant, Integer>{
 	
-	public Enseignant findByid(int id);
-	
 	public List<Enseignant> findByPosition(Statut position);
+
+	public Boolean existsByEmail(String email);
 	
 }

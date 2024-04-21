@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import tn.encar.gestnotes.models.entities.Enseignant;
+import tn.encar.gestnotes.models.entities.Etudiant;
+import tn.encar.gestnotes.models.entities.Personne;
+import tn.encar.gestnotes.models.enums.Role;
 import tn.encar.gestnotes.models.enums.Statut;
+import tn.encar.gestnotes.services.dto.SignInDTO;
+import tn.encar.gestnotes.services.dto.SignUpDTO;
+import tn.encar.gestnotes.services.impl.AuthService;
+import tn.encar.gestnotes.services.impl.EmailSenderService;
 import tn.encar.gestnotes.services.impl.EnseignantService;
 import tn.encar.gestnotes.services.impl.PersonneService;
 
@@ -33,6 +43,35 @@ public class EnseignantController {
 	@Autowired
 	private final PersonneService personneService;
 	
+    @Autowired
+    private AuthService authService;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    EmailSenderService emailSenderService;
+    
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUp(@RequestBody Enseignant signUpEtd) {
+        if (!personneService.findByEmail(signUpEtd.getEmail()).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Email deja existant!");
+        }      
+        signUpEtd.setRole(Role.ENSEIGNANT);
+        return ResponseEntity.ok(enseignantService.register(signUpEtd));
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> signIn(@RequestBody SignInDTO signInEtd) {
+        Personne etd = personneService.findByEmail(signInEtd.getEmail()).get();
+        if (etd != null && passwordEncoder.matches(signInEtd.getMotDePasse(), etd.getMotDePasse())) {
+        	return ResponseEntity.ok(authService.login(signInEtd));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Email ou mot de passe invalide");
+        }
+    }
 	
 	 @PostMapping("/save")
 	 public ResponseEntity<Enseignant> saveEnseignant(@RequestBody Enseignant enseignant) {
@@ -49,7 +88,20 @@ public class EnseignantController {
 	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
 	 }
-	 
+	    @PostMapping(path = "/code") //, consumes = MediaType.APPLICATION_JSON_VALUE
+	    public String envoyerCode(@RequestBody Enseignant ens) {
+	        System.out.println("******" + ens);
+	        if (enseignantService.existsByEmail(ens.getUsername())) {
+
+	        }
+	        String code = "" ;
+
+	int r = (int)Math.floor(Math.random() * (99999999 - 10000000) + 10000000) ;
+	code = Integer.toString(r);
+	System.out.println("******" + r);
+	        emailSenderService.sendEmailConfirm(ens.getEmail(), "testing", "récupération de compte",ens.getNom()+" "+ens.getPrenom(), code);
+	        return code;
+	    }
 	 @GetMapping("/get/position/{position}")
 	 public ResponseEntity<List<Enseignant>> getEnseignantByPosition(@PathVariable Statut position){
 		List<Enseignant> enseignants = enseignantService.getEnseignantByPosition(position);
@@ -173,6 +225,18 @@ public class EnseignantController {
 	            		.body("Erreur lors de la suppression de la classe de l'enseignant : " + e.getMessage());
 	        }
 	    }
+	    
+	    @PostMapping("/saveEnsByAdmin")
+	    public ResponseEntity<?> saveEnsByAdmin(@RequestBody Enseignant enseignant) {
+	    	 enseignant.setMotDePasse("ENICar2024 "+enseignant.getNom());
+			  enseignantService.registerEnsByAdmin(enseignant);
+		     return new ResponseEntity<>(true, HttpStatus.CREATED);
+		 }
+	    @PostMapping(path="/update")
+	    public ResponseEntity<?> updateEnseignant(@Valid @RequestBody Enseignant enseignant) {
+			  enseignantService.saveEnseignant(enseignant);
+		     return new ResponseEntity<>(enseignant, HttpStatus.CREATED);
+		 }
 
 	
 }

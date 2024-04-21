@@ -13,4 +13,6 @@ public interface I_AdminService {
 	 public void deleteAdmin(int id);
 	 public List<Admin> getAdminsByRole(AdminRole roleAdmin);
 	 public void updateRoleAdminById(int id, AdminRole roleAdmin);
+	Boolean existsByEmail(String email);
+	Admin getAdminByEmail(String email);
 }

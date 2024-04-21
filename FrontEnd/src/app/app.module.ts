@@ -12,18 +12,40 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
+  NbActionsModule,
+  NbButtonModule,
+  NbCardModule,
   NbChatModule,
   NbDatepickerModule,
   NbDialogModule,
+  NbIconModule,
+  NbListModule,
   NbMenuModule,
+  NbRadioModule,
+  NbSelectModule,
   NbSidebarModule,
+  NbTabsetModule,
   NbToastrModule,
+  NbUserModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { FormsModule } from '@angular/forms';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    NbCardModule,
+    NbUserModule,
+    NbButtonModule,
+    NbTabsetModule,
+    NbActionsModule,
+    NbRadioModule,
+    NbSelectModule,
+    NbListModule,
+    NbIconModule,
+    NgxEchartsModule,
+    FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

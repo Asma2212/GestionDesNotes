@@ -7,9 +7,13 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
+import { HomeComponent } from './home/home.component';
+import { FormsModule } from '@angular/forms';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
   imports: [
+    FormsModule,
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
@@ -19,6 +23,8 @@ import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
   ],
   declarations: [
     PagesComponent,
+    HomeComponent,
+    ContactComponent,
   ],
 })
 export class PagesModule {

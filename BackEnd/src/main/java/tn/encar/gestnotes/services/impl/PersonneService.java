@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,11 @@ public class PersonneService implements I_PersonneService {
 	@Override
 	public Personne getPersonneByTel(int tel) {
 		return personneRepository.findByTel(tel);
+	}
+	
+	@Override
+	public Optional<Personne> findByEmail(String email) {
+		return personneRepository.findByEmail(email);
 	}
 	
 	@Override

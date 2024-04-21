@@ -5,18 +5,28 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { HomeComponent } from './home/home.component';
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
     {
+      path: 'iot-dashboard',
+      component: DashboardComponent,
+    },
+    {
       path: 'dashboard',
       component: ECommerceComponent,
     },
     {
-      path: 'iot-dashboard',
-      component: DashboardComponent,
+      path: 'home',
+      component: HomeComponent,
+    },
+    {
+      path: 'contact',
+      component: ContactComponent,
     },
     {
       path: 'layout',
@@ -26,6 +36,11 @@ const routes: Routes = [{
     {
       path: 'forms',
       loadChildren: () => import('./forms/forms.module')
+        .then(m => m.FormsModule),
+    },
+    {
+      path: 'connect',
+      loadChildren: () => import('./forms copy/forms.module')
         .then(m => m.FormsModule),
     },
     {
