@@ -1,28 +1,54 @@
 import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
-  {
-    title: 'Accueil',
-    icon: 'home-outline',
-    link: '/admin/home',
-    home : true
-  },
+  // {
+  //   title: 'Accueil',
+  //   icon: 'home-outline',
+  //   link: '/admin/home',
+  //   home : true
+  // },
   {
     title: 'Dashboard Admin',
     icon: 'browser-outline',
     link: '/admin/dashboard',
+    home : true
   },
   {
     title: 'Autres',
     group: true,
   },
   {
-    title: 'Enseignants',
+    title: 'Réglement',
+    icon: 'layout-outline',
+    link: '/admin/reglement',
+  },
+  {
+    title: 'Les Administrateurs',
+    icon: 'shield-outline',
+    link: '/admin/admins',
+  },
+  {
+    title: 'Les Matieres',
+    icon: 'book-outline',
+    link: '/admin/matieres',
+  },
+  {
+    title: 'Les Classes',
+    icon: 'layers-outline',
+    link: '/admin/classes',
+  },
+  {
+    title: 'Les Départements',
+    icon: 'npm-outline',
+    link: '/admin/departements',
+  },
+  {
+    title: 'Les Enseignants',
     icon: 'people-outline',
     link: '/admin/enseignants',
   },
   {
-    title: 'Etudiants',
+    title: 'Les Etudiants',
     icon: 'award-outline',
     link: '/admin/etudiants',
   },
@@ -31,14 +57,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'lock-outline',
     children: [
       {
-        title: 'Se connecter',
+        title: 'Connexion Etudiant',
         icon : 'log-in-outline',
-        link: '/admin/connect/login',
+        link: '/etudiant/connect/login',
       },
       {
-        title: 'Ajouter Admin',
+        title: 'Connexion Enseignant',
+        icon : 'log-in-outline',
+        link: '/enseignant/connect/login',
+      },
+      {
+        title: 'S\'inscrire',
         icon : 'plus-outline',
-        link: '/admin/connect/register',
+        link: '/etudiant/connect/register',
       }
     ],
   },
@@ -170,28 +201,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
-  /*{
-    title: 'Maps',
-    icon: 'map-outline',
-    children: [
-      {
-        title: 'Google Maps',
-        link: '/admin/maps/gmaps',
-      },
-      {
-        title: 'Leaflet Maps',
-        link: '/admin/maps/leaflet',
-      },
-      {
-        title: 'Bubble Maps',
-        link: '/admin/maps/bubble',
-      },
-      {
-        title: 'Search Maps',
-        link: '/admin/maps/searchmap',
-      },
-    ],
-  },*/
   {
     title: 'Charts',
     icon: 'pie-chart-outline',
@@ -207,20 +216,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'D3',
         link: '/admin/charts/d3',
-      },
-    ],
-  },
-  {
-    title: 'Editors',
-    icon: 'text-outline',
-    children: [
-      {
-        title: 'TinyMCE',
-        link: '/admin/editors/tinymce',
-      },
-      {
-        title: 'CKEditor',
-        link: '/admin/editors/ckeditor',
       },
     ],
   },

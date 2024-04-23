@@ -16,14 +16,25 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'lock-outline',
     children: [
       {
-        title: 'Se connecter',
-        link: '/pages/connect/login',
+        title: 'Connexion Etudiant',
+        icon : 'log-in-outline',
+        link: '/etudiant/connect/login',
+      },
+      {
+        title: 'Connexion Enseignant',
+        icon : 'log-in-outline',
+        link: '/enseignant/connect/login',
       },
       {
         title: 'S\'inscrire',
         link: '/pages/connect/register',
       }
     ],
+  },
+  {
+    title: 'Reglement',
+    icon: 'home-outline',
+    link: '/pages/reglement',
   },
   {
     title: 'Layout',

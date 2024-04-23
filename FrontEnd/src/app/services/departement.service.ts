@@ -36,7 +36,7 @@ export class DepartementService {
   }
 
   addNewDepartement(departement: Departement): Observable<any> {
-    return this.http.post(this.url+'add', departement);
+    return this.http.post<any>(this.url+'add', departement);
   }
 
   updateDepartement(id: number, nom: string): Observable<any> {

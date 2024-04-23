@@ -33,6 +33,12 @@ public class MatiereController {
     		return ResponseEntity.status(HttpStatus.CONFLICT).body("Cette matiere existe déjà");
     	}
     }
+    
+    @PostMapping("/update")
+    public ResponseEntity<?> updateMatiere(@RequestBody Matiere matiere) {
+    	Matiere savedMatiere = matiereService.saveMatiere(matiere);
+        return new ResponseEntity<>(savedMatiere, HttpStatus.CREATED);	
+    }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getMatiereById(@PathVariable Long id) {

@@ -63,9 +63,9 @@ public class DepartementController {
     }
     
     @PostMapping("/add")
-    public ResponseEntity<Void> addNewDepartement(@RequestBody Departement departement) {
+    public ResponseEntity<Departement> addNewDepartement(@RequestBody Departement departement) {
         departementService.addNewDepartement(departement);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(departementService.addNewDepartement(departement),HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")

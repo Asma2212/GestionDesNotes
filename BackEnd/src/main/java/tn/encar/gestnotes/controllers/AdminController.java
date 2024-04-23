@@ -206,11 +206,22 @@ System.out.println("******" + r);
 	        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ancien mot de passe invalide");
 	    }
 	    @PostMapping ("/updatePass")
-	    public  Admin updatePassAdmin(@Valid @RequestBody Admin ad){
-	    	String passwordy =ad.getPassword();
-	    	passwordy = passwordEncoder.encode(passwordy);
+	    public  ResponseEntity<?> updatePassAdmin(@Valid @RequestBody Admin ad){
+	    	String passwordy = passwordEncoder.encode(ad.getMotDePasse());
 	        ad.setMotDePasse(passwordy);
-	             return   adminService.saveAdmin(ad);
+	             return new ResponseEntity<>(HttpStatus.OK);
 	    }
+		@PostMapping(path="/update")
+	    public ResponseEntity<?> updateAdmin(@Valid @RequestBody Admin admin) {
+			  adminService.saveAdmin(admin);
+		     return new ResponseEntity<>(admin, HttpStatus.CREATED);
+		 }
+	    @PostMapping("/saveAdminByAdmin")
+	    public ResponseEntity<Admin> saveAdminByAdmin(@RequestBody Admin admin) {
+	    	 admin.setMotDePasse("ENICar2024 "+admin.getNom());
+			  Admin ad = adminService.registerAdminByAdmin(admin);
+		     return new ResponseEntity<>(ad, HttpStatus.CREATED);
+		 }
+	    
 	    
 }

@@ -1,0 +1,60 @@
+<div style="display: flex;">
+<div class="col-md-8 col-md-offset-2 bootstrap snippets bootdeys">
+    <div class="widget-container scrollable list rollodex">
+      <div class="heading">Resultat : <i class="fa fa-plus pull-right"></i><i class="fa fa-search pull-right"></i><i class="fa fa-refresh pull-right"></i>
+      </div>
+      <div class="widget-content">
+        <div *ngFor="let matiere of (notesMatiere| keyvalue)">
+        <div class="roll-title title" style="display: flex;">
+         <div> {{ matiere.key}} </div>
+         <div>Moyenne par Matiere : {{moyParMatiere[matiere.key].toFixed(2)}}</div>
+        </div>
+        <ul *ngFor="let note of matiere.value">
+          <li style="display: flex;">
+            <div style="display: flex;">
+            <span class="idNote">{{note.idNote}}</span>&nbsp;&nbsp;- 
+            <div class="dateNote" style="padding: 4px 10px; font-size: small;">{{note.date}}</div>
+          </div>
+          <div style="display: flex;">
+            <div class="typeNote">{{note.type}}</div>  : 
+             <div class="note" style="padding: 0 10px;">{{note.note}}</div>
+            </div>
+             
+          </li>
+          
+        </ul></div>
+        
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="col-md-3 col-md-offset-2 ">
+    <div class="widget-container">
+      <div class="heading">Moyenne Génerale : <i class="fa fa-plus pull-right"></i><i class="fa fa-search pull-right"></i><i class="fa fa-refresh pull-right"></i>
+      </div>
+      <div class="widget-content">
+        <div class="roll-title title" style="display: flex;text-align: center;">
+          <div style="text-align: center;">Moyenne Génerale : Semestre 1 </div>
+        </div>
+        <ul>
+          <li style="display: flex;">
+            <div style="font-size: 20px;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: bold;margin-left:45px;"> {{moyenneGenerale.toFixed(2)}}</div>            
+          </li>          
+        </ul>  
+      
+      <!-- <div class="roll-title title" style="display: flex;">
+        <div>Rang : </div>
+        
+       </div>
+       <ul>
+         <li style="display: flex;">
+           <span class="idNote">{{rang}}</span>&nbsp;&nbsp;-              
+         </li>          
+       </ul>  -->
+      </div><hr> 
+     </div>
+    </div>
+    
+  </div>

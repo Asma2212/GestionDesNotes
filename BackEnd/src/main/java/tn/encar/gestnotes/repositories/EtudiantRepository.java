@@ -38,5 +38,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Integer>{
     
     @Query("SELECT e FROM Personne e WHERE e.dateNaiss > :dateNaiss and ROLE = 'ETUDIANT'")
     List<Etudiant> findByDateNaissGreaterThan(@Param("dateNaiss") Date dateNaiss);
+
+	Etudiant findByEmail(String email);
     
 }

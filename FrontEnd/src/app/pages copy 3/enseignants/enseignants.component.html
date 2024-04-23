@@ -1,0 +1,17 @@
+<div class="lists row">
+  <div class="col-md-12 col-lg-6 col-xxxl-6">
+    <nb-card class="list-card" size="small">
+      <nb-card-header>LISTE DES ETUDIANTS Matiere : Analyse</nb-card-header>
+      <nb-list>
+        <nb-list-item *ngFor="let etudiant of etudiants">
+          <nb-user [name]="etudiant.prenom +' '+ etudiant.nom" [title]="etudiant.tel">
+          </nb-user>
+          <div *ngFor="let n of etudiant.notes">
+            <span *ngIf="n.matiere.nomMatiere == 'Analyse'">{{n.note}}</span>
+            <span *ngIf="n.matiere.nomMatiere == 'Analyse'">{{n.type}}</span>
+          </div>
+        </nb-list-item>
+      </nb-list>
+    </nb-card>
+  </div>
+</div>

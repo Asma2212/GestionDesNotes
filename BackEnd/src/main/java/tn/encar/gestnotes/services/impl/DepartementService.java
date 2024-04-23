@@ -64,10 +64,11 @@ public class DepartementService implements I_DepartementService{
 	}
 
 	@Override
-	public void addNewDepartement(Departement departement) {
+	public Departement addNewDepartement(Departement departement) {
 		if(!departementRepository.findByNom(departement.getNom()).isEmpty())
 			throw new IllegalStateException("departement par le nom "+departement.getNom()+" existe deja!");
-		departementRepository.save(departement);
+		return departementRepository.save(departement);
+		
 		
 	}
 

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Enseignant } from '../models/Enseignant';
 import { Statut } from '../models/Statut';
+import { Note } from '../models/Note';
 
 @Injectable({
   providedIn: 'root'

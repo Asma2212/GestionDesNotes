@@ -45,6 +45,10 @@ public class EtudiantService implements I_EtudiantService{
     public Etudiant getEtudiantById(int id) {
         return etudiantRepository.findById(id).orElse(null);
     }
+    @Override
+    public Etudiant getEtudiantByEmail(String email) {
+        return etudiantRepository.findByEmail(email);
+    }
 
     @Override
     public List<Etudiant> getAllEtudiants() {
@@ -116,4 +120,5 @@ public class EtudiantService implements I_EtudiantService{
 				.token(jwtToken)
 				.build();
 	}
+
 }

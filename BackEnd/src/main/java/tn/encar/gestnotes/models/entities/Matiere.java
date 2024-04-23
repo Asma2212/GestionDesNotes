@@ -26,6 +26,8 @@ import lombok.ToString;
 @Entity
 public class Matiere {
 
+	public Matiere(String string, int i) {
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idMatiere;

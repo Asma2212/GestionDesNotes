@@ -13,7 +13,7 @@ public interface I_DepartementService {
 	public List<Departement> getDepartementByNom(String nom);
 	public List<Classe> getClassesByIdDepartement(int id);
 	public Regle getRegleByDepartementId(int id);
-	public void addNewDepartement(Departement departement);
+	public Departement addNewDepartement(Departement departement);
 	public void updateDepartement(int id, String nom);
 	public void deleteDepartementById(int id);
 	public int countDepartement();

@@ -40,7 +40,6 @@ public class Etudiant extends Personne{
 	@OneToMany( cascade =
 			CascadeType.ALL, mappedBy = "etudiant")
 			private Set<Absence> absences;
-	@JsonIgnore
 	@OneToMany( cascade =
 			CascadeType.ALL, mappedBy = "etudiant")
 			private Set<Note> notes;

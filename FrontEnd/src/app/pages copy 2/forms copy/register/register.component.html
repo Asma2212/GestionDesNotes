@@ -1,0 +1,51 @@
+<div class="row" style="margin-left: 400px;">
+  <div class="col-lg-7">
+    <nb-card>
+      <nb-card-header>S'inscrire</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="signupForm" (ngSubmit)="signup()">
+          <div class="form-group">
+          <input type="number" nbInput formControlName="cin" fullWidth required
+          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+          minlength="8" maxlength="8" placeholder="CIN">
+          <span style="color: #ff3353" *ngIf="!signupForm.get('cin').valid && signupForm.get('cin').touched" >CIN invalide!<i class="fa-solid fa-circle-x"></i></span>
+        </div>
+          <div class="full-name-inputs">
+            <input type="text" nbInput formControlName="prenom" fullWidth placeholder="Prénom">
+            <input type="text" nbInput formControlName="nom" fullWidth placeholder="Nom">
+          </div>
+          <div class="full-name-inputs">
+            <input type="tel" nbInput formControlName="tel" fullWidth placeholder="N° Tel">
+            <input nbInput placeholder="Date de naissance" formControlName="dateNaiss" [nbDatepicker]="picker">
+            <nb-datepicker #picker [min]="min" [max]="max"></nb-datepicker>
+          </div>
+          <input type="email" nbInput fullWidth placeholder="Adresse e-mail" formControlName="email">
+
+          <input type="password" nbInput fullWidth placeholder="Mot de passe" formControlName="password">
+          <input type="password" nbInput fullWidth placeholder="Confirmer le mot de passe" formControlName="confirmPassword">
+          <div *ngIf="signupForm.hasError('passwordMismatch') && (signupForm.get('confirmPassword').dirty || signupForm.get('confirmPassword').touched)">
+            <p class="error-message">Les mots de passe ne correspondent pas</p>
+          </div>
+          <div class="full-name-inputs">
+            <div class="radio_style">
+              <p class="radio_title">Genre :</p>
+              <nb-radio-group formControlName="genre" name="genreGroup">
+                <nb-radio [value]="'Femme'">Femme</nb-radio>
+                <nb-radio [value]="'Homme'">Homme</nb-radio>
+              </nb-radio-group>
+            </div>
+            <div class="radio_style_right">
+              <p class="radio_title">Rôle :</p>
+              <nb-radio-group formControlName="role" name="roleGroup">
+                <nb-radio [value]="'SUPER_ADMIN'">Super Admin</nb-radio>
+                <nb-radio [value]="'ADMIN_DE_CONTENU'">Admin de Contenu</nb-radio>
+              </nb-radio-group>
+            </div>
+          </div>
+    <button type="submit" nbButton status="primary" style="margin-left: 40%;" class="button_submit">Ajouter</button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+</div>

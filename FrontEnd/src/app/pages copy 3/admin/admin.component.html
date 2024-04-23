@@ -1,0 +1,110 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+<div class="row flex-lg-nowrap">
+  <div class="col">
+    <div class="e-tabs mb-3 px-3">
+      <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link active" href="#">Etudiants / Matiere : Analyse</a></li>
+      </ul>
+    </div>
+
+    <div class="row flex-lg-nowrap">
+      <div class="col mb-3">
+        <div class="e-panel card">
+          <div class="card-body">
+            <div class="card-title">
+              <h6 class="mr-2"><span>Notes</span><small class="px-1"> des etudiants</small></h6>
+            </div>
+            <div class="e-table">
+              <div class="table-responsive table-lg mt-3">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="max-width">Nom Complet</th>
+                      <th class="max-width">E-mail</th>
+                      <th class="max-width">Note</th>
+                      <th> </th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let etudiant of etudiants">
+                      <td class="text-nowrap align-middle">{{etudiant.prenom}} {{etudiant.nom}}</td>
+                      <td class="text-nowrap align-middle"><span>{{etudiant.email}}</span></td><!--[ngStyle]="getRoleStyle(etudiant.roleAdmi)"-->
+                      <td class="text-nowrap align-middle"><span  style="padding:4px;
+                        border-radius:4px" *ngFor="let n of etudiant.notes">
+                        <span *ngIf="n.matiere.nomMatiere=='Analyse'">{{n.type}} : {{n.note}}</span>
+                      </span></td>
+                      <td class="text-center align-middle"><i class="fa fa-fw text-secondary cursor-pointer fa-toggle-on"></i></td>
+                      <td class="text-center align-middle">
+                        <div class="btn-group align-top">
+                            <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#user-form-modal" >Edit</button><!--onclick="openForm()"-->
+                            <button class="btn btn-sm btn-outline-secondary badge" type="button"><i class="fa fa-trash"></i></button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="d-flex justify-content-center">
+                <ul class="pagination mt-3 mb-0">
+                  <li class="disabled page-item"><a href="#" class="page-link">‹</a></li>
+                  <li class="active page-item"><a href="#" class="page-link">1</a></li>
+                  <li class="page-item"><a href="#" class="page-link">2</a></li>
+                  <li class="page-item"><a href="#" class="page-link">3</a></li>
+                  <li class="page-item"><a href="#" class="page-link">4</a></li>
+                  <li class="page-item"><a href="#" class="page-link">5</a></li>
+                  <li class="page-item"><a href="#" class="page-link">›</a></li>
+                  <li class="page-item"><a href="#" class="page-link">»</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="text-center px-xl-3">
+              <button class="btn btn-success btn-block"  type="button" (click)="open3()">Affecter les notes</button>
+            </div>
+            <hr class="my-3">
+            <div class="e-navlist e-navlist--active-bold">
+              <ul class="nav">
+                <li class="nav-item active" style="text-align: center;"><a href="" class="nav-link"><span>Total:/</span>&nbsp;<small>&nbsp;{{this.etudiants.length}}</small></a></li>
+              </ul>
+            </div>
+            <hr class="my-3">
+            <div>
+              <div class="form-group">
+                <label>Rechercher par nom:</label>
+                <div><input class="form-control w-100" type="text" placeholder="Nom" value=""></div>
+              </div>
+            </div>
+            <hr class="my-3">
+            <div class="">
+              <label>Type de formation:</label>
+              <div class="px-2">
+                <div class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" name="user-status" id="users-status-disabled">
+                  <label class="custom-control-label" for="users-status-disabled">Ingenieur</label>
+                </div>
+              </div>
+              <div class="px-2">
+                <div class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" name="user-status" id="users-status-active">
+                  <label class="custom-control-label" for="users-status-active">Mastere</label>
+                </div>
+              </div>
+              <div class="px-2">
+                <div class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" name="user-status" id="users-status-any" checked="">
+                  <label class="custom-control-label" for="users-status-any">Doctorat</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

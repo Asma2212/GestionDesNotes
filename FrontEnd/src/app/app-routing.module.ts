@@ -26,6 +26,16 @@ export const routes: Routes = [
       .then(m => m.PagesModule),
   },
   {
+    path: 'enseignant',
+    loadChildren: () => import('./pages copy 3/pages.module')
+      .then(m => m.PagesModule),
+  },
+  {
+    path: 'etudiant',
+    loadChildren: () => import('./pages copy 2/pages.module')
+      .then(m => m.PagesModule),
+  },
+  {
     path: 'auth',
     component: NbAuthComponent,
     children: [

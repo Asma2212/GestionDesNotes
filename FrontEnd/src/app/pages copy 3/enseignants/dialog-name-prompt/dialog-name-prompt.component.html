@@ -1,0 +1,21 @@
+<nb-card>
+  <nb-card-header>Entrer votre email</nb-card-header>
+  <nb-card-body>
+    <div class="full-name-inputs">
+      <input #email nbInput placeholder="Email"><br>
+    </div>
+    <input #nom nbInput placeholder="Nom"><br>
+    <input #prenom nbInput placeholder="Prenom">
+    <div class="radio_style">
+      <p class="radio_title">Role Admin :</p>
+      <nb-radio-group name="roleGroup" [(ngModel)]="selectedRole">
+        <nb-radio #role value="SUPER_ADMIN">SUPER_ADMIN</nb-radio>
+        <nb-radio #role value="ADMIN_DE_CONTENU">ADMIN_DE_CONTENU</nb-radio>
+      </nb-radio-group>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button class="cancel" nbButton status="danger" (click)="cancel()">Annuler</button>
+    <button nbButton status="success" (click)="submit(email.value,nom.value,prenom.value)">Ajouter</button>
+  </nb-card-footer>
+</nb-card>

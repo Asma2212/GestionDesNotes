@@ -4,8 +4,10 @@ import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -37,9 +39,11 @@ public class Note {
 	private Long idNote ;
 	private double note ;
 	private int semestre ;
-	 @JsonFormat(pattern = "dd/MM/yyyy")
-	 @Transient
+	 @JsonFormat(pattern = "dd-MM-yyyy")
 	 private Date date;
+	 @Column(insertable=false, updatable=false)
+	 private String type;
+	 @JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL
 			,fetch = FetchType.EAGER/* fetch =
 			FetchType.LAZY*/)

@@ -6,6 +6,7 @@ export class Note {
     note: number;
     semestre: number;
     date: Date;
+    type: string;
     etudiant: Etudiant;
     matiere: Matiere;
 }

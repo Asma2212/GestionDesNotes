@@ -3,12 +3,18 @@ package tn.encar.gestnotes.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import jakarta.validation.Valid;
 import tn.encar.gestnotes.config.JwtService;
 import tn.encar.gestnotes.models.entities.Admin;
+import tn.encar.gestnotes.models.entities.Enseignant;
 import tn.encar.gestnotes.models.enums.AdminRole;
 import tn.encar.gestnotes.models.enums.Role;
 import tn.encar.gestnotes.repositories.AdminRepository;
@@ -22,6 +28,7 @@ public class AdminService implements I_AdminService {
 	
 	@Autowired
 	private AdminRepository adminRepository;
+	
 	
 	@Autowired
 	private PersonneRepository personneRepository;
@@ -50,9 +57,9 @@ public class AdminService implements I_AdminService {
 
 	@Override
 	public Admin saveAdmin(Admin admin) {
-		if(!personneRepository.findByCin(admin.getCin()).isEmpty()
+		/*if(!personneRepository.findByCin(admin.getCin()).isEmpty()
 				|| !personneRepository.findByEmail(admin.getEmail()).isEmpty())
-			throw new IllegalStateException("email ou cin existe deja!");
+			throw new IllegalStateException("email ou cin existe deja!");*/
 		return adminRepository.save(admin);
 	}
 
@@ -94,10 +101,19 @@ public class AdminService implements I_AdminService {
 	public Boolean existsByEmail(String email) {
 		return adminRepository.existsByEmail(email);
 	}
-	
+
 	@Override
 	public Admin getAdminByEmail(String email) {
 		return adminRepository.findByEmail(email);
 	}
+	
+	public Admin registerAdminByAdmin(Admin request) {
+		String mp = request.getMotDePasse();
+		request.setMotDePasse(passwordEncoder.encode(request.getMotDePasse()));
+			Admin ad = saveAdmin(request);
+			emailSenderService.sendEmail(request.getEmail(), "testing", "Bienvenue à ENIC Notes", request.getCin(), mp,Role.ADMIN.name());
+			return ad;
+	}
+
 
 }

@@ -1,0 +1,84 @@
+nb-card-body,
+form {
+  overflow: visible;
+  padding-top: 0;
+
+  >* {
+    margin-top: 1rem;
+  }
+}
+
+.full-name-inputs,
+.validation-checkboxes {
+  display: flex;
+  margin: 0 -0.5rem;
+
+  >* {
+    margin: 0 0.5rem;
+  }
+}
+
+.checkbox-radio {
+  display: flex;
+}
+
+.demo-items {
+  flex: 1 0 33%;
+}
+
+.radio_style {
+  width: 50%;
+  border: 1px solid rgba(118, 112, 112, 0.222);
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.radio_style_right {
+  margin: 0 50%;
+  width: 50%;
+  border: 1px solid rgba(118, 112, 112, 0.222);
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.radio_title {
+  color: rgb(17, 69, 117);
+  text-decoration: underline;
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+  margin-bottom: 10px;
+}
+
+button {
+  background: #03A9F4;
+  padding: 10px 16px;
+  width: auto;
+  font-weight: 600;
+  text-transform:  uppercase;
+  font-size: 14px;
+  color: #fff;
+  line-height: 16px;
+  letter-spacing: 0.5px;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1), 0 3px 6px rgba(0,0,0,0.1);
+  border: 0;
+  outline: 0;
+  margin: 15px 15px 15px 0;
+  transition: all 0.25s;
+}
+
+button:hover {
+  background: #0288D1;
+  box-shadow: 0 4px 7px rgba(0,0,0,0.1), 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}

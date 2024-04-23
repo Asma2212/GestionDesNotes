@@ -33,7 +33,7 @@ export class ClasseService {
   }
 
   saveClasse(classe: Classe): Observable<any> {
-    return this.http.post(this.url+'add', classe);
+    return this.http.post<any>(this.url+'add', classe);
   }
 
   deleteClasseById(id: number): Observable<any> {

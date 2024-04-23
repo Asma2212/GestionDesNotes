@@ -91,5 +91,10 @@ public class AuthService {
 				.token(jwtToken)
 				.build();
 	}
+	
+	public boolean isUserAuthenticated() {
+        // Votre logique pour vérifier si l'utilisateur est authentifié
+        return true; // Par exemple, vous pourriez utiliser Spring Security pour cette vérification
+    }
 
 }

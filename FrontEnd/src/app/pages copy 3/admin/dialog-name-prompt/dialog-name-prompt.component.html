@@ -1,0 +1,15 @@
+<nb-card>
+  <nb-card-header>Entrer l'email</nb-card-header>
+  <nb-card-body>
+    <div class="full-name-inputs">
+      <input #email nbInput placeholder="Email"><br>
+    </div>
+    <input #noteDS nbInput placeholder="Note DS"><br>
+    <input #noteOrale nbInput placeholder="Note Orale">
+    <input #noteExamen nbInput placeholder="Note Examen">
+  </nb-card-body>
+  <nb-card-footer>
+    <button class="cancel" nbButton status="danger" (click)="cancel()">Annuler</button>
+    <button nbButton status="success" (click)="submit(email.value,noteDS.value,noteOrale.value,noteExamen.value)">Ajouter</button>
+  </nb-card-footer>
+</nb-card>

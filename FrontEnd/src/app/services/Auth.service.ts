@@ -116,5 +116,32 @@ export class AuthService {
       }),
       );
   }
+  signupEtudiant(loginRequestPayload: loginRequestPayload): Observable<boolean> {
+    return this.http.post<LoginResponsePayload>(this.urlEtudiant + "signup", loginRequestPayload)
+      .pipe(map(data => {
+        this.a = "ETUDIANT";
+        localStorage.setItem('authenticationToken', data.token);
+        localStorage.setItem('username', loginRequestPayload.email);
+        localStorage.setItem('nomPrenom', data.prenom + " " + data.nom);
+        localStorage.setItem('role', this.a);
+
+        return true;
+      }),
+      );
+  }
+
+  signupEnseignant(loginRequestPayload: loginRequestPayload): Observable<boolean> {
+    return this.http.post<LoginResponsePayload>(this.urlEnseignant + "signup", loginRequestPayload)
+      .pipe(map(data => {
+        this.a = "ENSEIGNANT";
+        localStorage.setItem('authenticationToken', data.token);
+        localStorage.setItem('username', loginRequestPayload.email);
+        localStorage.setItem('nomPrenom', data.prenom + " " + data.nom);
+        localStorage.setItem('role', this.a);
+
+        return true;
+      }),
+      );
+  }
 
 }

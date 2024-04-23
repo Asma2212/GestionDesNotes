@@ -21,7 +21,7 @@
             <table border="0" width="100%">
                 <tr style="display:flex"padding-left:40px>
                     <td>
-                <img src="../logoEnic" style="width:70%" />
+                
             </td>
                     <td colspan="2" style="display : relative;width:100%;padding-right:30px">
                         <p style="text-align:center"><a href="http://localhost:4200/pages/home" target="_blank" style="text-color:#0818A8">Visiter Notre plateforme</a></p>
@@ -29,7 +29,7 @@
                     </td>
                 </tr>
                 <tr>
-                <td>  <img src="../logo1Clean" style="width:70%" /> </td>
+                <td>  </td>
                 </tr>
             </table>
         </td>
@@ -52,7 +52,6 @@
                         <h3 style="padding-left:20px"> Vous etes inscrit dans notre plateforme.<br> 
                         C'est un grand honneur de vous compter parmis nos chers ${role}</h3>
                         <h3 style="padding-left:20px"> Vous pouvez vous authentifié avec le mot de passe suivant : <strong> ${password} </strong></h3>
-                        <h3 style="padding-left:20px"> Carte d'identité Nationale : ${cin}</h3>
                         </p>
                     </td>
                 </tr>

@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tn.encar.gestnotes.models.entities.DS;
 import tn.encar.gestnotes.models.entities.Etudiant;
+import tn.encar.gestnotes.models.entities.Examen;
 import tn.encar.gestnotes.models.entities.Matiere;
 import tn.encar.gestnotes.services.impl.DSService;
 import tn.encar.gestnotes.services.impl.EtudiantService;
 import tn.encar.gestnotes.services.impl.MatiereService;
 
 @RestController
-@RequestMapping("/api/ds")
+@RequestMapping("/api/note/ds")
 public class DSController {
 
 	@Autowired
@@ -35,6 +36,7 @@ public class DSController {
 	
     @PostMapping("/save")
     public ResponseEntity<DS> saveDS(@RequestBody DS ds) {
+    	ds.setType("DS");
     	int idEtd;
     	Long idMatiere;
     	Etudiant etudiant;

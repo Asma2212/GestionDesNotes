@@ -19,9 +19,14 @@ export class AdminService {
 
     return this.http.post<any>(this.url + 'signup', admin);
   }
-  updateAdmin(admin: Admin): Observable<any> {
+  saveAdminByAdmin(admin: Admin): Observable<any> {
 
-    return this.http.post<any>(this.url + 'update/' + admin.id, admin);
+    return this.http.post<any>(this.url + 'saveAdminByAdmin', admin);
+  }
+  updateAdmin(admin: Admin): Observable<any> {
+    console.log("admin" + JSON.stringify(admin));
+    return this.http.post<any>(this.url + 'update', JSON.stringify(admin)
+    );
   }
 
   deleteAdmin(ida: number): Observable<any> {

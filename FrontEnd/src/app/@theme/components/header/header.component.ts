@@ -26,19 +26,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   themes = [
     {
       value: 'default',
-      name: 'Light',
+      name: 'éclairer',
     },
     {
       value: 'dark',
-      name: 'Dark',
+      name: 'sombre',
     },
     {
       value: 'cosmic',
-      name: 'Cosmic',
+      name: 'cosmetique',
     },
     {
       value: 'corporate',
-      name: 'Corporate',
+      name: 'corporatif',
     },
   ];
 
@@ -57,7 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if(this.authService.isLoggedInAdmin()) 
+    if(this.authService.isLoggedInAdmin()|| this.authService.isLoggedInEnseignant()||this.authService.isLoggedInEtudiant()) 
       {
         this.auth = true;
         this.role = localStorage.getItem("role");
@@ -132,21 +132,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   redirectNotes(){
     if(this.auth && this.role=="ADMIN"){
-      this.router.navigate(['/admin/notes']);
+      this.router.navigate(['/admin/note']);
     }else
     if(this.auth && this.role=="ENSEIGNANT"){
-      this.router.navigate(['/enseignant/notes']);
+      this.router.navigate(['/enseignant/note']);
     }else
-    this.router.navigate(['/pages/notes']);
+    this.router.navigate(['/etudiant/note']);
   }
   redirectResultat(){
-    if(this.auth && this.role=="ADMIN"){
-      this.router.navigate(['/admin/resultat']);
-    }else
-    if(this.auth && this.role=="ENSEIGNANT"){
-      this.router.navigate(['/enseignant/resultat']);
-    }else
-    this.router.navigate(['/pages/resultat']);
+    
+    this.router.navigate(['/etudiant/resultat']);
+  }
+  redirectReglement(){
+    
+    this.router.navigate(['/pages/reglement']);
   }
   redirectProfile(){
     if(this.auth && this.role=="ADMIN"){
@@ -160,6 +159,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   deconnecter(){
     localStorage.clear();
+    location.replace("/pages/profile");
   }
 
 }

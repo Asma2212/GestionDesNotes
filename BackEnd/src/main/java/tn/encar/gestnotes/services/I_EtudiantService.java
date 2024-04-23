@@ -22,4 +22,5 @@ public interface I_EtudiantService {
 	Boolean existsByEmail(String email);
 	public Etudiant addNote(Note note);
 	List<Etudiant> getAllEtudiantsByClasse(Classe classe);
+	Etudiant getEtudiantByEmail(String email);
 }

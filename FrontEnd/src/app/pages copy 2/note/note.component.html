@@ -1,0 +1,47 @@
+<div class="app-container">
+    <div class="app-content">
+      <div class="projects-section">
+         <div class="project-boxes jsGridView">
+            <div class="project-box-wrapper" *ngFor="let note of notes" >
+              <div class="project-box" [style.background-color]="getDepartmentColor1(note.note)">
+                <div class="project-box-header">
+                  <span>{{note.date}}</span>
+                  <div class="more-wrapper">
+                    <button class="project-btn-more">
+                        {{note.id}}
+                    </button>
+              </div>
+            </div>
+            <div class="project-box-content-header">
+              <p class="box-content-header">{{note.matiere.nomMatiere}}</p>
+              <p class="box-content-subheader">Semestre : {{note.semestre}}</p>
+            </div>
+            <div class="box-progress-wrapper">
+              <p class="box-progress-header"></p>
+              <div class="box-progress-bar">
+              <span class="box-progress" [style.width.px]="note.note+100" [style.background-color]="getDepartmentColor2(note.note)"></span>
+              </div>
+            </div>
+            <div class="project-box-footer">
+              <div class="participants ">
+                <button class="add-participant days-right" [style.background-color]="getDepartmentColor2(note.note)" style="padding: 10px;">
+                  <span class="feather feather-plus">
+                    {{note.idNote}}
+                  </span>
+                </button>
+              </div>
+              <div class="days-left" [style.background-color]="getDepartmentColor2(note.note)">
+                Note : {{note.note}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  </div>
+
+
+
+
+  

@@ -11,6 +11,12 @@ import { EnseignantsComponent } from './enseignants/enseignants.component';
 import { EtudiantsComponent } from './etudiants/etudiants.component';
 import { AuthAdminGuard } from '../services/auth_guard/auth-admin.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { RegleService } from '../services/regle.service';
+import { ReglementComponent } from './reglement/reglement.component';
+import { AdminComponent } from './admin/admin.component';
+import { MatiereComponent } from './matiere/matiere.component';
+import { ClasseComponent } from './classe/classe.component';
+import { DepartementComponent } from './departement/departement.component';
 
 const routes: Routes = [{
   path: '',
@@ -31,6 +37,26 @@ const routes: Routes = [{
     {
       path: 'profile',
       component: ProfileComponent,canActivate : [AuthAdminGuard]
+    },
+    {
+      path: 'reglement',
+      component: ReglementComponent,
+    },
+    {
+      path: 'admins',
+      component: AdminComponent,
+    },
+    {
+      path: 'matieres',
+      component: MatiereComponent,
+    },
+    {
+      path: 'classes',
+      component: ClasseComponent,
+    },
+    {
+      path: 'departements',
+      component: DepartementComponent,
     },
     {
       path: 'enseignants',
@@ -83,11 +109,6 @@ const routes: Routes = [{
       path: 'charts',
       loadChildren: () => import('./charts/charts.module')
         .then(m => m.ChartsModule),
-    },
-    {
-      path: 'editors',
-      loadChildren: () => import('./editors/editors.module')
-        .then(m => m.EditorsModule),
     },
     {
       path: 'tables',

@@ -21,7 +21,7 @@ import tn.encar.gestnotes.services.impl.EvaluationService;
 import tn.encar.gestnotes.services.impl.MatiereService;
 
 @RestController
-@RequestMapping("/api/evaluation")
+@RequestMapping("/api/note/evaluation")
 public class EvaluationController {
 
 	@Autowired
@@ -35,6 +35,7 @@ public class EvaluationController {
 	
     @PostMapping("/save")
     public ResponseEntity<Evaluation> saveEvaluation(@RequestBody Evaluation evaluation) {
+    	evaluation.setType("Evaluation");
     	int idEtd;
     	Long idMatiere;
     	Etudiant etudiant;

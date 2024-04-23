@@ -1,3 +1,6 @@
+import { Etudiant } from "./Etudiant";
+import { Matiere } from "./Matiere";
+
 export class DS{
     idNote: number;
     note: number;

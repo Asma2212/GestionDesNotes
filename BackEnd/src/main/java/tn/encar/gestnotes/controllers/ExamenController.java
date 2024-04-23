@@ -35,6 +35,7 @@ public class ExamenController {
 	
     @PostMapping("/save")
     public ResponseEntity<Examen> saveExamen(@RequestBody Examen examen) {
+    	examen.setType("Examen");
     	int idEtd;
     	Long idMatiere;
     	Etudiant etudiant;

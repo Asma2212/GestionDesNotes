@@ -2,24 +2,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
+import { ReglementComponent } from './reglement/reglement.component';
 
 const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
-    {
-      path: 'iot-dashboard',
-      component: DashboardComponent,
-    },
-    {
-      path: 'dashboard',
-      component: ECommerceComponent,
-    },
     {
       path: 'home',
       component: HomeComponent,
@@ -27,6 +18,10 @@ const routes: Routes = [{
     {
       path: 'contact',
       component: ContactComponent,
+    },
+    {
+      path: 'reglement',
+      component: ReglementComponent,
     },
     {
       path: 'layout',
@@ -54,24 +49,9 @@ const routes: Routes = [{
         .then(m => m.ModalOverlaysModule),
     },
     {
-      path: 'extra-components',
-      loadChildren: () => import('./extra-components/extra-components.module')
-        .then(m => m.ExtraComponentsModule),
-    },
-    {
       path: 'maps',
       loadChildren: () => import('./maps/maps.module')
         .then(m => m.MapsModule),
-    },
-    {
-      path: 'charts',
-      loadChildren: () => import('./charts/charts.module')
-        .then(m => m.ChartsModule),
-    },
-    {
-      path: 'editors',
-      loadChildren: () => import('./editors/editors.module')
-        .then(m => m.EditorsModule),
     },
     {
       path: 'tables',

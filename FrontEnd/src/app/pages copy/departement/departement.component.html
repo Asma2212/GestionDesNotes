@@ -1,0 +1,73 @@
+<div class="app-container">
+    <div class="app-content">
+      <div class="projects-section">
+        <div class="projects-section-header">
+          <div class="search-wrapper">
+            <button class="btn btn-success btn-block"  type="button" (click)="open3()">Ajouter un Departement</button>  
+        </div>
+        <!-- <p>liste des Departements</p> -->
+          <p class="time">{{currentDate}}</p>
+        </div>
+        <div class="projects-section-line">
+          <div class="projects-status">
+            <div class="item-status" >
+                <span class="status-number">{{totalDep}}</span>
+                <span class="status-type">Total Departement</span>
+              </div>
+            <div class="item-status" >
+              <span class="status-number">{{totalClasse}}</span>
+              <span class="status-type">Total Classes</span>
+            </div>
+            <div class="item-status">
+              <span class="status-number">{{totalEtd}}</span>
+              <span class="status-type">Total Etudiant</span>
+            </div>
+            <div class="item-status">
+              <span class="status-number">{{totalMatiere}}</span>
+              <span class="status-type">Total Matiere</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="project-boxes jsGridView">
+          <div class="project-box-wrapper" *ngFor="let departement of departements" >
+            <div class="project-box" [style.background-color]="getDepartmentColor1(departement.nom)">
+              <div class="project-box-header">
+                <span>{{currentDate}}</span>
+                <div class="more-wrapper">
+                  <button class="project-btn-more">
+                      {{departement.id}}
+                  </button>
+            </div>
+          </div>
+          <div class="project-box-content-header">
+            <p class="box-content-header">{{departement.nom}}</p>
+            <p class="box-content-subheader">Modélisation</p>
+          </div>
+          <div class="box-progress-wrapper">
+            <p class="box-progress-header">Avancement selon le nombre de classe</p>
+            <div class="box-progress-bar">
+            <span class="box-progress" [style.width.px]="getNbre(departement.classes.length)+100" [style.background-color]="getDepartmentColor2(departement.nom)"></span>
+            </div>
+            <p class="box-progress-percentage">{{getNbre(departement.classes.length)}}%</p>
+          </div>
+          <div class="project-box-footer">
+            <div class="participants">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80" alt="participant">
+              <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTB8fG1hbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" alt="participant">
+              <button class="add-participant" [style.background-color]="getDepartmentColor2(departement.nom)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </button>
+            </div>
+            <div class="days-left" [style.background-color]="getDepartmentColor2(departement.nom)">
+              {{departement.nom}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
