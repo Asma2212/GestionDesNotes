@@ -52,4 +52,9 @@ public class Note {
 			,fetch = FetchType.EAGER/* fetch =
 			FetchType.LAZY*/)
 			private Matiere matiere;
+	
+	public Note(double note, String type) {
+		this.note = note ;
+		this.type = type ;
+	}
 }

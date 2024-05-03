@@ -36,5 +36,15 @@ public class Enseignant extends Personne {
 			   inverseJoinColumns = @JoinColumn(name ="id_classe")
 	)
 	private Set<Classe> classesAffectees = new HashSet<>();
+
+	public void addClasse(Classe c1) {
+		this.classesAffectees.add(c1);
+		
+	}
+
+	public void removeClasse(Classe c1) {
+		this.classesAffectees.remove(c1);
+		
+	}
 	
 }

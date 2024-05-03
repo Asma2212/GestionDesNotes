@@ -33,7 +33,8 @@ public class AuthService {
 	
     @Autowired
     EmailSenderService emailSenderService;
-	
+    
+	private static boolean isAuth=false ;
 	private final JwtService jwtService ;
 	
 	private final PasswordEncoder passwordEncoder;
@@ -73,7 +74,7 @@ public class AuthService {
 		var user = personneRepo.findByEmail(request.getEmail())
 				.orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-        
+        isAuth = true;
       return  AuthResponse.builder()
         		.nom(user.getNom())
         		.prenom(user.getPrenom())
@@ -93,8 +94,7 @@ public class AuthService {
 	}
 	
 	public boolean isUserAuthenticated() {
-        // Votre logique pour vérifier si l'utilisateur est authentifié
-        return true; // Par exemple, vous pourriez utiliser Spring Security pour cette vérification
+        return isAuth;
     }
 
 }

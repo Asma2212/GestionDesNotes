@@ -2,6 +2,7 @@ package tn.encar.gestnotes.models.entities;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,13 +40,21 @@ public class Etudiant extends Personne{
 	@JsonIgnore
 	@OneToMany( cascade =
 			CascadeType.ALL, mappedBy = "etudiant")
-			private Set<Absence> absences;
+			private Set<Absence> absences = new HashSet<Absence>();
 	@OneToMany( cascade =
 			CascadeType.ALL, mappedBy = "etudiant")
-			private Set<Note> notes;
+			private Set<Note> notes = new HashSet<Note>();
 	@ManyToOne(cascade = CascadeType.ALL
 			,fetch = FetchType.EAGER/* fetch =
 			FetchType.LAZY*/)
 			private Classe classe;
+	public void addNotes(Note note) {
+		this.notes.add(note);
+		
+	}
+	public void deleteNote(Note note) {
+		this.notes.remove(note);
+		
+	}
 
 }

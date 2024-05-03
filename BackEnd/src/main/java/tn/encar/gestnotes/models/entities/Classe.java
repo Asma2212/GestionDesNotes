@@ -49,4 +49,9 @@ public class Classe {
                 '}';
     }
 	
+	public Classe(int niveau , char groupe) {
+		this.niveau = niveau ;
+		this.groupe = groupe;
+	}
+	
 }
